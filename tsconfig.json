@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "preserveConstEnums": true,
+    "moduleResolution": "node",
+    "types": ["node"],
+    "lib": ["es2020"],
+    "target": "es2022",
+    "module": "es2022",
+		"outDir": "./dist",
+    "baseUrl": "./src",
+		"allowJs": true,
+    "paths": {
+			"@modules/*": ["modules/*"],
+			"@config/*": ["config/*"],
+			"@shared/*": ["shared/*"]
+		},
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "skipLibCheck": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}

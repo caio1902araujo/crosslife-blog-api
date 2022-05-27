@@ -33,7 +33,7 @@ studentRouter.post(
       telephone: Joi.string().required(),
 		}
 	}),
-	studentController.create
+	studentController.create,
 );
 
 export default studentRouter;

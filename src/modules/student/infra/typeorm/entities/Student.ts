@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinTable, JoinColumn } from 'typeorm';
 import { Exclude, Expose } from 'class-transformer';
 import uploadConfig from '@config/upload';
+import PhysicalEvaluation from '@modules/physicalEvaluation/infra/typeorm/entities/PhysicalEvaluation';
 
 @Entity('student')
 class Student{
@@ -41,6 +42,10 @@ class Student{
         return null;
     }
   }
+
+  @OneToOne(() => PhysicalEvaluation, physicalEvaluations => physicalEvaluations.student, {cascade:['insert']})
+  @Exclude()
+  physicalEvaluation: PhysicalEvaluation
 }
 
 export default Student

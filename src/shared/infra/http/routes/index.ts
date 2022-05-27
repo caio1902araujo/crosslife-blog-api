@@ -16,6 +16,9 @@ import studentRouter from '@modules/student/infra/http/routes/student.routes';
 import sessionsStudentRouter from '@modules/student/infra/http/routes/sessionsStudent.routes';
 import studentProfileRouter from '@modules/student/infra/http/routes/studentProfile.routes';
 
+import physicalEvaluationRouter from '@modules/physicalEvaluation/infra/http/routes/physicalEvaluation.routes';
+import studentPhysicalEvaluationRouter from '@modules/physicalEvaluation/infra/http/routes/studentPhysicalEvaluation.routes';
+
 const routes = Router();
 
 routes.use('/sessions/admin', sessionsAdminRouter);
@@ -32,6 +35,8 @@ routes.use('/student', studentRouter);
 routes.use('/password/student', passwordRouter);
 routes.use('/sessions/student', sessionsStudentRouter);
 routes.use('/profile/student', studentProfileRouter);
+routes.use('/physical-evaluation/student', studentPhysicalEvaluationRouter);
 
+routes.use('/physical-evaluation', physicalEvaluationRouter);
 
 export default routes;

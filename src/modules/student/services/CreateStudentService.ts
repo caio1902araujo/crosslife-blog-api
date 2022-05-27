@@ -1,4 +1,4 @@
-import { injectable, inject } from 'tsyringe';
+import { injectable, inject, container } from 'tsyringe';
 import path from 'path';
 
 import Student from '../infra/typeorm/entities/Student';
@@ -6,6 +6,8 @@ import Student from '../infra/typeorm/entities/Student';
 import IStudentRepository from '../repositories/IStudentRepository';
 import IHashProvider from '@shared/container/providers/hashProvider/models/IHashProvider';
 import IMailProvider from '@shared/container/providers/mailProvider/models/IMailProvider';
+import CreatePhysicalEvaluationService from '@modules/physicalEvaluation/services/CreatePhysicalEvaluationService';
+import GenerateStudentCredentialsService from './GenerateStudentCredentialsService';
 
 import AppError from "@shared/errors/AppError";
 
@@ -14,12 +16,13 @@ interface IRequest {
 	telephone: string,
 	cpf: string,
   email: string,
-  username: string,
-  password: string,
 }
 
 @injectable()
 class CreateStudentService {
+  private generateStudentCredentialsService;
+  private createPhysicalEvaluationService;
+
 	constructor(
 		@inject('StudentRepository')
 		private studentRepository: IStudentRepository,
@@ -29,22 +32,39 @@ class CreateStudentService {
 
 		@inject('HashProvider')
 		private hashProvider: IHashProvider
-	){}
+	){
+    this.generateStudentCredentialsService = container.resolve(GenerateStudentCredentialsService);
+    this.createPhysicalEvaluationService = new CreatePhysicalEvaluationService();
+  }
 
-	public async execute({name, cpf, telephone, email, username, password}: IRequest): Promise<Student>{
+	public async execute({name, cpf, telephone, email}: IRequest): Promise<Student>{
 		const checkCPFExist = await this.studentRepository.findByCPF(cpf);
 
 		if(checkCPFExist){
 			throw new AppError('Esse CPF já esta em uso.', 400);
 		}
 
-    const checkEmailExist = await this.studentRepository.findByUsername(username);
+    const checkEmailExist = await this.studentRepository.findByUsername(email);
 
 		if(checkEmailExist){
 			throw new AppError('O email ja esta em uso.', 400);
 		}
 
+    const {username, password} = await this.generateStudentCredentialsService.execute(name);
+
 		const passwordHashed = await this.hashProvider.generateHash(password);
+
+    const physicalEvaluation = await this.createPhysicalEvaluationService.execute(
+      {
+        fat_mass:0,
+        lean_mass:0,
+        muscle_mass:0,
+        bone_density:0,
+        visceral_fat:0,
+        basal_metabolism:0,
+        hydration:0
+      }
+    );
 
 		const student = await this.studentRepository.create({
 			name,
@@ -53,6 +73,7 @@ class CreateStudentService {
       telephone,
 			username,
 			password: passwordHashed,
+      physicalEvaluation,
 		});
 
     const credencialsStudentTemplate = path.resolve(__dirname, '..', 'views', 'credencials.hbs');

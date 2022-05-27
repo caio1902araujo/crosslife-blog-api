@@ -5,18 +5,15 @@ import { instanceToInstance } from 'class-transformer'
 import CreateStudentService from '@modules/student/services/CreateStudentService';
 import ListStudentsService from '@modules/student/services/ListStudentsService';
 import DeleteStudentService from '@modules/student/services/DeleteStudentService';
-import GenerateStudentCredentialsService from '@modules/student/services/GenerateStudentCredentialsService';
 import IFindAllStudentDTO from '@modules/student/dtos/IFindAllStudentDTO';
 
 class StudentController{
 	public async create(request: Request, response: Response): Promise<Response>{
     const { name, cpf, telephone, email } = request.body;
 
-    const generateStudentCredentialsService = container.resolve(GenerateStudentCredentialsService);
-    const {username, password} = await generateStudentCredentialsService.execute(name);
-
     const createStudentService = container.resolve(CreateStudentService);
-    const student = await createStudentService.execute({ name, email, username, password, cpf, telephone});
+    const student = await createStudentService.execute({ name, email, cpf, telephone});
+    request.body.id = student.id;
 
     return response.json(instanceToInstance(student));
   }
@@ -34,6 +31,7 @@ class StudentController{
 
   public async delete(request: Request, response: Response): Promise<Response>{
     const id = request.params.id as string;
+
     const deleteStudentService = container.resolve(DeleteStudentService);
     await deleteStudentService.execute(id);
 

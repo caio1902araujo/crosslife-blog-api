@@ -15,10 +15,14 @@ import IStudentRepository from '@modules/student/repositories/IStudentRepository
 import StudentRepository from '@modules/student/infra/typeorm/repositories/StudentRepository';
 
 import IStudentTokenRepository from '@modules/student/repositories/IStudentTokenRepository';
-import StudentTokenRepository from '@modules/student/infra/typeorm/repositories/StudentTokenRepository'
+import StudentTokenRepository from '@modules/student/infra/typeorm/repositories/StudentTokenRepository';
+
+import PhysicalEvaluationRepository from '@modules/physicalEvaluation/infra/typeorm/repositories/PhysicalEvaluationRepository';
+import IPhysicalEvaluationRepository from '@modules/physicalEvaluation/repositories/IPhysicalEvaluationRepository';
 
 container.registerSingleton<IAdminRepository>('AdminRepository', AdminRepository);
 container.registerSingleton<IAuthorRepository>('AuthorRepository', AuthorRepository);
 container.registerSingleton<ITrainerRepository>('TrainerRepository', TrainerRepository);
 container.registerSingleton<IStudentRepository>('StudentRepository', StudentRepository);
 container.registerSingleton<IStudentTokenRepository>('StudentTokenRepository', StudentTokenRepository);
+container.registerSingleton<IPhysicalEvaluationRepository>('PhysicalEvaluationRepository', PhysicalEvaluationRepository);

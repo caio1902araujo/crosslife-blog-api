@@ -17,13 +17,12 @@ class TrainerRepository implements ITrainerRepository{
     await this.ormRepository.delete(id);
   }
 
-  public async findAllTrainers({name='', username='', offset=0, limit=10, order='DESC'}: IFindAllTrainerDTO): Promise<Trainer[]> {
+  public async findAllTrainers({name, username, offset, limit}: IFindAllTrainerDTO): Promise<Trainer[]> {
     const trainers = this.ormRepository.find({
       where: {
         name: ILike('%' + name + '%'),
         username: ILike('%' + username + '%'),
       },
-      order: { name: order },
       take: limit,
       skip: offset,
     });

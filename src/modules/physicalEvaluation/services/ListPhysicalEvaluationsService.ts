@@ -3,13 +3,7 @@ import { inject, injectable } from 'tsyringe';
 import PhysicalEvaluation from '../infra/typeorm/entities/PhysicalEvaluation';
 
 import IPhysicalEvaluationRepository from '../repositories/IPhysicalEvaluationRepository';
-
-interface IRequest {
-  name: string,
-  username: string,
-  limit: number,
-  offset: number,
-}
+import IFindAllPhysicalEvaluationDTO from '../dtos/IFindAllPhysicalEvaluationDTO'
 
 
 @injectable()
@@ -19,7 +13,7 @@ class ListPhysicalEvaluationsService{
 		private physicalEvaluationRepository: IPhysicalEvaluationRepository,
 	){}
 
-	public async execute({name, username, limit, offset}: IRequest): Promise<PhysicalEvaluation[]> {
+	public async execute({name, username, limit, offset}: IFindAllPhysicalEvaluationDTO): Promise<PhysicalEvaluation[]> {
     const physicalEvaluation = await this.physicalEvaluationRepository.findAllPhysicalEvaluations({name, username, limit, offset});
 
 		return physicalEvaluation;

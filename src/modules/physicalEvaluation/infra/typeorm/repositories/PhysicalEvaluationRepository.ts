@@ -13,15 +13,11 @@ class PhysicalEvaluationRepository implements IPhysicalEvaluationRepository{
 		this.ormRepository = getRepository(PhysicalEvaluation);
 	}
 
-  public async delete(id:string) {
-    await this.ormRepository.delete(id);
-  }
-
-  public async findAllPhysicalEvaluations({ name='',  username='', offset, limit}: IFindAllPhysicalEvaluationDTO): Promise<PhysicalEvaluation[]> {
+  public async findAllPhysicalEvaluations({ name,  username, offset, limit}: IFindAllPhysicalEvaluationDTO): Promise<PhysicalEvaluation[]> {
 
     const physicalEvaluation = await this.ormRepository.createQueryBuilder('physical_evaluation')
     .leftJoinAndSelect("physical_evaluation.student", "student")
-    .where("student.name ILIKE :name OR student.username = :username", {name: `%${name}%`, username: `%${username}%`})
+    .where("student.name ILIKE :name AND student.username ILIKE :username", {name: `%${name}%`, username: `%${username}%`})
     .select(['physical_evaluation.id, fat_mass', 'lean_mass', 'muscle_mass', 'bone_density', 'visceral_fat', 'basal_metabolism', 'hydration', 'name', 'username'])
     .offset(offset)
     .limit(limit)

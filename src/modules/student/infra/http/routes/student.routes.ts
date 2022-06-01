@@ -11,7 +11,17 @@ const studentController = new StudentController();
 studentRouter.use(ensureValidToken);
 studentRouter.use(ensureValidAdmin);
 
-studentRouter.get('/', studentController.index);
+studentRouter.get('/',
+celebrate({
+  [Segments.QUERY]:{
+    name: Joi.string().default(''),
+    username: Joi.string().default(''),
+    cpf: Joi.string().default(''),
+    offset: Joi.number().default(0),
+    limit: Joi.number().default(10),
+  }
+}),
+studentController.index);
 
 studentRouter.delete(
   '/:id',

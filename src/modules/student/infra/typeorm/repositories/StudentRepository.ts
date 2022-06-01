@@ -17,14 +17,13 @@ class StudentRepository implements IStudentRepository{
     await this.ormRepository.delete(id);
   }
 
-  public async findAllStudents({name='', username='', cpf='', order='DESC', limit=10, offset=0}: IFindAllStudentDTO): Promise<Student[]> {
+  public async findAllStudents({name, username, cpf, limit, offset}: IFindAllStudentDTO): Promise<Student[]> {
     const authors = this.ormRepository.find({
       where: {
         name: ILike('%' + name + '%'),
         username: ILike('%' + username + '%'),
         cpf: ILike('%' + cpf + '%'),
       },
-      order: { name: order },
       take: limit,
       skip: offset,
     });

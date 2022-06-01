@@ -37,12 +37,10 @@ class PhysicalEvaluationController{
   }
 
   public async index(request: Request, response: Response): Promise<Response>{
-    const { name, username } = request.query;
-    const limit = request.query.limit !== undefined ? parseInt(request.query.limit as string) : 10;
-    const offset = request.query.offset !== undefined ? parseInt(request.query.offset as string) : 0;
+    const { name, username, limit, offset } = request.query as IFindAllPhysicalEvaluationDTO;
 
     const listPhysicalEvaluationsService = container.resolve(ListPhysicalEvaluationsService);
-		const physicalEvaluations = await listPhysicalEvaluationsService.execute({ name, username, offset, limit} as IFindAllPhysicalEvaluationDTO);
+		const physicalEvaluations = await listPhysicalEvaluationsService.execute({ name, username, offset, limit});
 
     return response.json(physicalEvaluations);
   }

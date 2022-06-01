@@ -18,12 +18,10 @@ class TrainerController{
   }
 
   public async index(request: Request, response: Response): Promise<Response>{
-    const {name, username, order} = request.query;
-    const limit = parseInt(request.query.limit as string);
-    const offset = parseInt(request.query.offset as string);
+    const {name, username, limit, offset} = request.query as IFindAllTrainerDTO;
 
 		const listTrainersService = container.resolve(ListTrainersService);
-		const trainers = await listTrainersService.execute({ name, username, limit, offset, order} as IFindAllTrainerDTO);
+		const trainers = await listTrainersService.execute({ name, username, limit, offset });
 
 		return response.json(instanceToInstance(trainers));
 	}

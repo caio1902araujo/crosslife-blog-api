@@ -3,14 +3,7 @@ import { inject, injectable } from 'tsyringe';
 import IAuthorRepository from '../repositories/IAuthorRepository';
 
 import Author from '../infra/typeorm/entities/Author';
-
-interface IRequest {
-  name: string,
-	username: string,
-  limit: number,
-  offset: number,
-  order: 'DESC' | 'ASC'
-}
+import IFindAllAuthorDTO from '../dtos/IFindAllAuthorDTO';
 
 @injectable()
 class ListAuthorsService{
@@ -19,8 +12,8 @@ class ListAuthorsService{
 		private authorRepository: IAuthorRepository,
 	){}
 
-	public async execute({name, username, limit, offset, order}: IRequest): Promise<Author[]> {
-		const authors = await this.authorRepository.findAllAuthors({name, username, limit, offset, order});
+	public async execute({ name, username, limit, offset }: IFindAllAuthorDTO): Promise<Author[]> {
+		const authors = await this.authorRepository.findAllAuthors({ name, username, limit, offset });
 
 		return authors;
 	}

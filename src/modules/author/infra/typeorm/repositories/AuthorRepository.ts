@@ -17,13 +17,12 @@ class AuthorRepository implements IAuthorRepository{
     await this.ormRepository.delete(id);
   }
 
-  public async findAllAuthors({name='', username='', offset=0, limit=10, order='DESC'}: IFindAllAuthorDTO): Promise<Author[]> {
+  public async findAllAuthors({ name='', username='', offset=0, limit=10 }: IFindAllAuthorDTO): Promise<Author[]> {
     const authors = await this.ormRepository.find({
       where: {
         name: ILike('%' + name + '%'),
         username: ILike('%' + username + '%'),
       },
-      order: { name: order },
       take: limit,
       skip: offset,
     });

@@ -10,7 +10,19 @@ const authorController = new AuthorController();
 
 authorRouter.get('/:username', authorController.show);
 
-authorRouter.get('/', ensureValidToken, ensureValidAdmin, authorController.index);
+authorRouter.get('/',
+  ensureValidToken,
+  ensureValidAdmin,
+  celebrate({
+    [Segments.QUERY]:{
+      name: Joi.string(),
+      username: Joi.string(),
+      limit: Joi.number().default(10),
+      offset: Joi.number().default(0)
+    }
+  }),
+  authorController.index
+);
 
 authorRouter.delete(
   '/:id',
@@ -21,7 +33,6 @@ authorRouter.delete(
   }),
   authorController.delete
 );
-
 
 authorRouter.post(
 	'/',

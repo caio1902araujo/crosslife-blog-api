@@ -3,14 +3,7 @@ import { inject, injectable } from 'tsyringe';
 import ITrainerRepository from '../repositories/ITrainerRepository';
 
 import Trainer from '../infra/typeorm/entities/Trainer';
-
-interface IRequest {
-  name: string,
-	username: string,
-  limit: number,
-  offset: number,
-  order: 'DESC' | 'ASC'
-}
+import IFindAllTrainerDTO from '../dtos/IFindAllTrainerDTO';
 
 @injectable()
 class ListTrainersService{
@@ -19,8 +12,8 @@ class ListTrainersService{
 		private trainerRepository: ITrainerRepository,
 	){}
 
-	public async execute({name, username, limit, offset, order}: IRequest): Promise<Trainer[]> {
-		const trainers = await this.trainerRepository.findAllTrainers({name, username, limit, offset, order});
+	public async execute({ name, username, limit, offset }: IFindAllTrainerDTO): Promise<Trainer[]> {
+		const trainers = await this.trainerRepository.findAllTrainers({ name, username, limit, offset });
 
 		return trainers;
 	}

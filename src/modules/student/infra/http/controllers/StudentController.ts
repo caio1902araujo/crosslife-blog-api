@@ -19,12 +19,10 @@ class StudentController{
   }
 
   public async index(request: Request, response: Response): Promise<Response>{
-    const {name, username, cpf, order} = request.query;
-    const limit = parseInt(request.query.limit as string);
-    const offset = parseInt(request.query.offset as string);
+    const { name, username, cpf, limit, offset } = request.query as IFindAllStudentDTO;
 
     const listStudentsService = container.resolve(ListStudentsService);
-		const students = await listStudentsService.execute({ name, username, cpf, offset, limit, order} as IFindAllStudentDTO);
+		const students = await listStudentsService.execute({ name, username, cpf, offset, limit });
 
     return response.json(instanceToInstance(students));
   }

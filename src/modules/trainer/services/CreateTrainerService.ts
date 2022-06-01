@@ -4,15 +4,9 @@ import Trainer from '../infra/typeorm/entities/Trainer';
 
 import ITrainerRepository from '../repositories/ITrainerRepository';
 import IHashProvider from '@shared/container/providers/hashProvider/models/IHashProvider';
+import ICreateTrainerDTO from '../dtos/ICreateTrainerDTO';
 
 import AppError from '@shared/errors/AppError';
-
-interface IRequest {
-	name: string,
-	username: string,
-	password: string,
-  email: string,
-}
 
 @injectable()
 class CreateTrainerService {
@@ -24,7 +18,7 @@ class CreateTrainerService {
 		private hashProvider: IHashProvider
 	){}
 
-	public async execute({name, username, password, email}: IRequest): Promise<Trainer>{
+	public async execute({name, username, password, email}: ICreateTrainerDTO): Promise<Trainer>{
 		const checkUsernameExist = await this.trainerRepository.findByUsername(username);
 
 		if(checkUsernameExist){

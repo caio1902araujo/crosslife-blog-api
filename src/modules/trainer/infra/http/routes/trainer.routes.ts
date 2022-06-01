@@ -11,7 +11,17 @@ const trainerController = new TrainerController();
 trainerRouter.use(ensureValidToken);
 trainerRouter.use(ensureValidAdmin);
 
-trainerRouter.get('/', trainerController.index);
+trainerRouter.get('/',
+  celebrate({
+    [Segments.QUERY]:{
+      name: Joi.string().default(''),
+      username: Joi.string().default(''),
+      offset: Joi.number().default(0),
+      limit: Joi.number().default(10),
+    }
+  }),
+  trainerController.index
+);
 
 trainerRouter.delete(
   '/:id',

@@ -36,12 +36,10 @@ class AuthorController{
 	}
 
   public async index(request: Request, response: Response): Promise<Response>{
-    const {name, username, order} = request.query;
-    const limit = parseInt(request.query.limit as string);
-    const offset = parseInt(request.query.offset as string);
+    const { name, username, limit, offset } = request.query as IFindAllAuthorDTO;
 
 		const listAuthorsService = container.resolve(ListAuthorsService);
-		const authors = await listAuthorsService.execute({ name, username, limit, offset, order} as IFindAllAuthorDTO);
+		const authors = await listAuthorsService.execute({ name, username, limit, offset });
 
 		return response.json(instanceToInstance(authors));
 	}

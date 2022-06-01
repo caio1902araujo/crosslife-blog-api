@@ -1,4 +1,5 @@
 import PhysicalEvaluation from '@modules/physicalEvaluation/infra/typeorm/entities/PhysicalEvaluation';
+import Matriculation from '@modules/matriculation/infra/typeorm/entities/Matriculation';
 
 interface ICreateStudentDTO {
   name: string,
@@ -7,7 +8,8 @@ interface ICreateStudentDTO {
   email: string,
   username: string,
   password: string,
-  physicalEvaluation: PhysicalEvaluation
+  physicalEvaluation: PhysicalEvaluation,
+  matriculation: Matriculation
 }
 
 export default ICreateStudentDTO;

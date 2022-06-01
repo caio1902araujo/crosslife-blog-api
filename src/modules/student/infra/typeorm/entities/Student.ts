@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinTable, JoinColumn
 import { Exclude, Expose } from 'class-transformer';
 import uploadConfig from '@config/upload';
 import PhysicalEvaluation from '@modules/physicalEvaluation/infra/typeorm/entities/PhysicalEvaluation';
+import Matriculation from '@modules/matriculation/infra/typeorm/entities/Matriculation';
 
 @Entity('student')
 class Student{
@@ -46,6 +47,10 @@ class Student{
   @OneToOne(() => PhysicalEvaluation, physicalEvaluations => physicalEvaluations.student, {cascade:['insert']})
   @Exclude()
   physicalEvaluation: PhysicalEvaluation
+
+  @OneToOne(() => Matriculation, matriculation => matriculation.student, {cascade:['insert']})
+  @Exclude()
+  matriculation: Matriculation
 }
 
 export default Student

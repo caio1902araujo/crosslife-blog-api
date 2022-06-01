@@ -7,6 +7,7 @@ import IStudentRepository from '../repositories/IStudentRepository';
 import IHashProvider from '@shared/container/providers/hashProvider/models/IHashProvider';
 import IMailProvider from '@shared/container/providers/mailProvider/models/IMailProvider';
 import CreatePhysicalEvaluationService from '@modules/physicalEvaluation/services/CreatePhysicalEvaluationService';
+import CreateMatriculationService from '@modules/matriculation/services/CreateMatriculationService';
 import GenerateStudentCredentialsService from './GenerateStudentCredentialsService';
 
 import AppError from "@shared/errors/AppError";
@@ -22,6 +23,7 @@ interface IRequest {
 class CreateStudentService {
   private generateStudentCredentialsService;
   private createPhysicalEvaluationService;
+  private createMatriculationService;
 
 	constructor(
 		@inject('StudentRepository')
@@ -35,6 +37,7 @@ class CreateStudentService {
 	){
     this.generateStudentCredentialsService = container.resolve(GenerateStudentCredentialsService);
     this.createPhysicalEvaluationService = new CreatePhysicalEvaluationService();
+    this.createMatriculationService = new CreateMatriculationService();
   }
 
 	public async execute({name, cpf, telephone, email}: IRequest): Promise<Student>{
@@ -66,6 +69,13 @@ class CreateStudentService {
       }
     );
 
+    const matriculation = await this.createMatriculationService.execute(
+      {
+        active: true,
+        type: 'normal',
+      }
+    );
+
 		const student = await this.studentRepository.create({
 			name,
       email,
@@ -74,6 +84,7 @@ class CreateStudentService {
 			username,
 			password: passwordHashed,
       physicalEvaluation,
+      matriculation,
 		});
 
     const credencialsStudentTemplate = path.resolve(__dirname, '..', 'views', 'credencials.hbs');

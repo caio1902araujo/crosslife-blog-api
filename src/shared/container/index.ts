@@ -20,9 +20,13 @@ import StudentTokenRepository from '@modules/student/infra/typeorm/repositories/
 import PhysicalEvaluationRepository from '@modules/physicalEvaluation/infra/typeorm/repositories/PhysicalEvaluationRepository';
 import IPhysicalEvaluationRepository from '@modules/physicalEvaluation/repositories/IPhysicalEvaluationRepository';
 
+import MatriculationRepository from '@modules/matriculation/infra/typeorm/repositories/MatriculationRepository';
+import IMatriculationRepository from '@modules/matriculation/repositories/IMatriculationRepository';
+
 container.registerSingleton<IAdminRepository>('AdminRepository', AdminRepository);
 container.registerSingleton<IAuthorRepository>('AuthorRepository', AuthorRepository);
 container.registerSingleton<ITrainerRepository>('TrainerRepository', TrainerRepository);
 container.registerSingleton<IStudentRepository>('StudentRepository', StudentRepository);
 container.registerSingleton<IStudentTokenRepository>('StudentTokenRepository', StudentTokenRepository);
 container.registerSingleton<IPhysicalEvaluationRepository>('PhysicalEvaluationRepository', PhysicalEvaluationRepository);
+container.registerSingleton<IMatriculationRepository>('MatriculationRepository', MatriculationRepository);

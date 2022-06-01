@@ -4,15 +4,9 @@ import Author from '../infra/typeorm/entities/Author';
 
 import IAuthorRepository from '../repositories/IAuthorRepository';
 import IHashProvider from '@shared/container/providers/hashProvider/models/IHashProvider';
+import ICreateAuthorDTO from '../dtos/ICreateAuthorDTO';
 
 import AppError from '@shared/errors/AppError';
-
-interface IRequest {
-	name: string,
-	username: string,
-	password: string,
-  description: string,
-}
 
 @injectable()
 class CreateAuthorService {
@@ -24,7 +18,7 @@ class CreateAuthorService {
 		private hashProvider: IHashProvider
 	){}
 
-	public async execute({name, username, password, description}: IRequest): Promise<Author>{
+	public async execute({name, username, password, description}: ICreateAuthorDTO): Promise<Author>{
 		const checkUserExist = await this.authorRepository.findByUsername(username);
 
 		if(checkUserExist){

@@ -19,6 +19,8 @@ import studentProfileRouter from '@modules/student/infra/http/routes/studentProf
 import physicalEvaluationRouter from '@modules/physicalEvaluation/infra/http/routes/physicalEvaluation.routes';
 import studentPhysicalEvaluationRouter from '@modules/physicalEvaluation/infra/http/routes/studentPhysicalEvaluation.routes';
 
+import matriculationRouter from '@modules/matriculation/infra/http/routes/matriculation.routes';
+
 const routes = Router();
 
 routes.use('/sessions/admin', sessionsAdminRouter);
@@ -38,5 +40,7 @@ routes.use('/profile/student', studentProfileRouter);
 routes.use('/physical-evaluation/student', studentPhysicalEvaluationRouter);
 
 routes.use('/physical-evaluation', physicalEvaluationRouter);
+
+routes.use('/matriculation', matriculationRouter);
 
 export default routes;

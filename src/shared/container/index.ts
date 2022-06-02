@@ -23,6 +23,9 @@ import IPhysicalEvaluationRepository from '@modules/physicalEvaluation/repositor
 import MatriculationRepository from '@modules/matriculation/infra/typeorm/repositories/MatriculationRepository';
 import IMatriculationRepository from '@modules/matriculation/repositories/IMatriculationRepository';
 
+import InventoryRepository from '@modules/inventory/infra/typeorm/repositories/InventoryRepository';
+import IInventoryRepository from '@modules/inventory/repositories/IInventoryRepository';
+
 container.registerSingleton<IAdminRepository>('AdminRepository', AdminRepository);
 container.registerSingleton<IAuthorRepository>('AuthorRepository', AuthorRepository);
 container.registerSingleton<ITrainerRepository>('TrainerRepository', TrainerRepository);
@@ -30,3 +33,4 @@ container.registerSingleton<IStudentRepository>('StudentRepository', StudentRepo
 container.registerSingleton<IStudentTokenRepository>('StudentTokenRepository', StudentTokenRepository);
 container.registerSingleton<IPhysicalEvaluationRepository>('PhysicalEvaluationRepository', PhysicalEvaluationRepository);
 container.registerSingleton<IMatriculationRepository>('MatriculationRepository', MatriculationRepository);
+container.registerSingleton<IInventoryRepository>('InventoryRepository', InventoryRepository);

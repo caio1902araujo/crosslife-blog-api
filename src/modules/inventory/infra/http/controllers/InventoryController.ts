@@ -5,7 +5,7 @@ import ShowInventoryService from '@modules/inventory/services/ShowInventoryServi
 import CreateInventoryService from '@modules/inventory/services/CreateInventoryService';
 import DeleteInventoryService from '@modules/inventory/services/DeleteInventoryService';
 import ListInventoriesService from '@modules/inventory/services/ListInventoriesService';
-import UpdateInventoryProfileService from '@modules/inventory/services/UpdateInventoryProfileService';
+import UpdateInventoryService from '@modules/inventory/services/UpdateInventoryService';
 import IFindAllInventoryDTO from '@modules/inventory/dtos/IFindAllInventoryDTO';
 
 class InventoryController {
@@ -43,10 +43,8 @@ class InventoryController {
     const inventoryId = request.params.id;
     const { product, quantity, note } = request.body;
 
-    const updateInventoryProfileService = container.resolve(
-      UpdateInventoryProfileService,
-    );
-    const inventory = await updateInventoryProfileService.execute({
+    const updateInventoryService = container.resolve(UpdateInventoryService);
+    const inventory = await updateInventoryService.execute({
       inventoryId,
       product,
       quantity,

@@ -23,6 +23,8 @@ import matriculationRouter from '@modules/matriculation/infra/http/routes/matric
 
 import inventoryRouter from '@modules/inventory/infra/http/routes/inventory.routes';
 
+import budgetRouter from '@modules/budget/infra/http/routes/budget.routes';
+
 const routes = Router();
 
 routes.use('/sessions/admin', sessionsAdminRouter);
@@ -46,5 +48,7 @@ routes.use('/physical-evaluation', physicalEvaluationRouter);
 routes.use('/matriculation', matriculationRouter);
 
 routes.use('/inventory', inventoryRouter);
+
+routes.use('/budget', budgetRouter);
 
 export default routes;

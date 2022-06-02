@@ -26,11 +26,43 @@ import IMatriculationRepository from '@modules/matriculation/repositories/IMatri
 import InventoryRepository from '@modules/inventory/infra/typeorm/repositories/InventoryRepository';
 import IInventoryRepository from '@modules/inventory/repositories/IInventoryRepository';
 
-container.registerSingleton<IAdminRepository>('AdminRepository', AdminRepository);
-container.registerSingleton<IAuthorRepository>('AuthorRepository', AuthorRepository);
-container.registerSingleton<ITrainerRepository>('TrainerRepository', TrainerRepository);
-container.registerSingleton<IStudentRepository>('StudentRepository', StudentRepository);
-container.registerSingleton<IStudentTokenRepository>('StudentTokenRepository', StudentTokenRepository);
-container.registerSingleton<IPhysicalEvaluationRepository>('PhysicalEvaluationRepository', PhysicalEvaluationRepository);
-container.registerSingleton<IMatriculationRepository>('MatriculationRepository', MatriculationRepository);
-container.registerSingleton<IInventoryRepository>('InventoryRepository', InventoryRepository);
+import BudgetRepository from '@modules/budget/infra/typeorm/repositories/BudgetRepository';
+import IBudgetRepository from '@modules/budget/repositories/IBudgetRepository';
+
+container.registerSingleton<IAdminRepository>(
+  'AdminRepository',
+  AdminRepository,
+);
+container.registerSingleton<IAuthorRepository>(
+  'AuthorRepository',
+  AuthorRepository,
+);
+container.registerSingleton<ITrainerRepository>(
+  'TrainerRepository',
+  TrainerRepository,
+);
+container.registerSingleton<IStudentRepository>(
+  'StudentRepository',
+  StudentRepository,
+);
+container.registerSingleton<IStudentTokenRepository>(
+  'StudentTokenRepository',
+  StudentTokenRepository,
+);
+container.registerSingleton<IPhysicalEvaluationRepository>(
+  'PhysicalEvaluationRepository',
+  PhysicalEvaluationRepository,
+);
+container.registerSingleton<IMatriculationRepository>(
+  'MatriculationRepository',
+  MatriculationRepository,
+);
+container.registerSingleton<IInventoryRepository>(
+  'InventoryRepository',
+  InventoryRepository,
+);
+
+container.registerSingleton<IBudgetRepository>(
+  'BudgetRepository',
+  BudgetRepository,
+);

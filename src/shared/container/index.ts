@@ -29,6 +29,9 @@ import IInventoryRepository from '@modules/inventory/repositories/IInventoryRepo
 import BudgetRepository from '@modules/budget/infra/typeorm/repositories/BudgetRepository';
 import IBudgetRepository from '@modules/budget/repositories/IBudgetRepository';
 
+import WorkoutRepository from '@modules/workout/infra/typeorm/repositories/WorkoutRepository';
+import IWorkoutRepository from '@modules/workout/repositories/IWorkoutRepository';
+
 container.registerSingleton<IAdminRepository>(
   'AdminRepository',
   AdminRepository,
@@ -65,4 +68,9 @@ container.registerSingleton<IInventoryRepository>(
 container.registerSingleton<IBudgetRepository>(
   'BudgetRepository',
   BudgetRepository,
+);
+
+container.registerSingleton<IWorkoutRepository>(
+  'WorkoutRepository',
+  WorkoutRepository,
 );

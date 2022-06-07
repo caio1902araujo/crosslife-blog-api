@@ -25,6 +25,9 @@ import inventoryRouter from '@modules/inventory/infra/http/routes/inventory.rout
 
 import budgetRouter from '@modules/budget/infra/http/routes/budget.routes';
 
+import workoutRouter from '@modules/workout/infra/http/routes/workout.routes';
+import workoutsOfTheWeekRouter from '@modules/workout/infra/http/routes/workoutsOfTheWeek.routes';
+
 const routes = Router();
 
 routes.use('/sessions/admin', sessionsAdminRouter);
@@ -50,5 +53,8 @@ routes.use('/matriculation', matriculationRouter);
 routes.use('/inventory', inventoryRouter);
 
 routes.use('/budget', budgetRouter);
+
+routes.use('/workout', workoutRouter);
+routes.use('/workouts/week', workoutsOfTheWeekRouter);
 
 export default routes;

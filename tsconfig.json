@@ -1,30 +1,45 @@
 {
   "compilerOptions": {
-    "lib": ["es2020"],
+    "lib": [
+      "es2020"
+    ],
     "sourceMap": true,
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "preserveConstEnums": true,
     "moduleResolution": "node",
     "target": "ES2020",
     "module": "CommonJS",
-		"outDir": "./dist",
+    "outDir": "./dist",
     "rootDir": "./src",
     "baseUrl": "./src",
-		"allowJs": true,
+    "allowJs": true,
     "paths": {
-			"@modules/*": ["modules/*"],
-			"@config/*": ["config/*"],
-			"@shared/*": ["shared/*"]
-		},
+      "@modules/*": [
+        "modules/*"
+      ],
+      "@config/*": [
+        "config/*"
+      ],
+      "@shared/*": [
+        "shared/*"
+      ]
+    },
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "strictPropertyInitialization": false,
     "skipLibCheck": true,
-		"experimentalDecorators": true,
-		"emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
   },
-  "include": ["src/**/*", "src/shared/infra/typeorm/index.ts", "tmp/1651239804453-CreateStudent.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src/**/*",
+    "src/shared/infra/typeorm/index.ts",
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

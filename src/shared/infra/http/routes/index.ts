@@ -28,6 +28,9 @@ import budgetRouter from '@modules/budget/infra/http/routes/budget.routes';
 import workoutRouter from '@modules/workout/infra/http/routes/workout.routes';
 import workoutsOfTheWeekRouter from '@modules/workout/infra/http/routes/workoutsOfTheWeek.routes';
 
+import newsRouter from '@modules/news/infra/http/routes/news.routes';
+import newsAuthorRouter from '@modules/news/infra/http/routes/newsAuthor.routes';
+
 const routes = Router();
 
 routes.use('/sessions/admin', sessionsAdminRouter);
@@ -56,5 +59,8 @@ routes.use('/budget', budgetRouter);
 
 routes.use('/workout', workoutRouter);
 routes.use('/workouts/week', workoutsOfTheWeekRouter);
+
+routes.use('/news/author', newsAuthorRouter);
+routes.use('/news', newsRouter);
 
 export default routes;

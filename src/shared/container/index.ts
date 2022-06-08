@@ -32,6 +32,9 @@ import IBudgetRepository from '@modules/budget/repositories/IBudgetRepository';
 import WorkoutRepository from '@modules/workout/infra/typeorm/repositories/WorkoutRepository';
 import IWorkoutRepository from '@modules/workout/repositories/IWorkoutRepository';
 
+import NewsRepository from '@modules/news/infra/typeorm/repositories/NewsRepository';
+import INewsRepository from '@modules/news/repositories/INewsRepository';
+
 container.registerSingleton<IAdminRepository>(
   'AdminRepository',
   AdminRepository,
@@ -74,3 +77,5 @@ container.registerSingleton<IWorkoutRepository>(
   'WorkoutRepository',
   WorkoutRepository,
 );
+
+container.registerSingleton<INewsRepository>('NewsRepository', NewsRepository);

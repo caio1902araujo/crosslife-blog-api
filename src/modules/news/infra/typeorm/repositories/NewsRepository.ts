@@ -57,20 +57,9 @@ class NewsRepository implements INewsRepository {
   }
 
   public async findById(id: string): Promise<News | undefined> {
-    const findNews = await this.ormRepository
-      .createQueryBuilder('news')
-      .leftJoinAndSelect('news.author', 'author')
-      .where('news.id = :id', { id })
-      .select([
-        'news.id',
-        'title',
-        'subtitle',
-        'body',
-        'created_at',
-        'updated_at',
-        'name',
-      ])
-      .execute();
+    const findNews = await this.ormRepository.findOne({
+      where: { id },
+    });
 
     return findNews;
   }

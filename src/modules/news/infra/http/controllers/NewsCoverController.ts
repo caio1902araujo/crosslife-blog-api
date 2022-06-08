@@ -9,7 +9,7 @@ class NewsCoverController {
     const filename = request.file?.filename || '';
     const updateCoverNewsService = container.resolve(UpdateCoverNewsService);
 
-    updateCoverNewsService.execute({
+    await updateCoverNewsService.execute({
       newsId: id,
       categoryImage: 'news',
       coverFilename: filename,

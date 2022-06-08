@@ -5,7 +5,6 @@ import News from '../infra/typeorm/entities/News';
 import INewsRepository from '../repositories/INewsRepository';
 
 import AppError from '@shared/errors/AppError';
-import { getHours, isBefore, startOfHour } from 'date-fns';
 
 interface IRequest {
   newsId: string;

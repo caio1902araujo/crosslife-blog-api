@@ -3,25 +3,26 @@ import { Exclude, Expose } from 'class-transformer';
 import uploadConfig from '@config/upload';
 
 @Entity('authors')
-class Author{
+class Author {
   @PrimaryGeneratedColumn('uuid')
-  id: string
+  id: string;
 
   @Column()
-  name: string
+  name: string;
 
   @Column()
-  username: string
+  username: string;
 
   @Column()
   @Exclude()
-  password: string
+  password: string;
 
   @Column()
-  description: string
+  description: string;
 
   @Column()
-  avatar: string
+  @Exclude()
+  avatar: string;
 
   @Expose({ name: 'avatar_url' })
   getAvatarUrl(): string | null {
@@ -30,11 +31,11 @@ class Author{
       case 'disk':
         return `${process.env.APP_API_URL}/files/${this.avatar}`;
       case 'firebase':
-        return `https://storage.googleapis.com/${process.env.BUCKET}/authors/${this.avatar}`
+        return `https://storage.googleapis.com/${process.env.BUCKET}/authors/${this.avatar}`;
       default:
         return null;
     }
   }
 }
 
-export default Author
+export default Author;

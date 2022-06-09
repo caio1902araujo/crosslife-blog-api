@@ -27,13 +27,13 @@ class NewsRepository implements INewsRepository {
     const news = await this.ormRepository
       .createQueryBuilder('news')
       .leftJoinAndSelect('news.author', 'author')
-      .where('title ILIKE :title', { title: `%${title}%` })
-      .andWhere('username = :username', { username })
-      .select(['news.id', 'title', 'subtitle', 'created_at', 'name'])
+      .where('news.title ILIKE :title', { title: `%${title}%` })
+      .andWhere('author.username = :username', { username })
+      .select(['news.id', 'news.title', 'news.category', 'author.name'])
       .orderBy('created_at', 'DESC')
       .offset(offset)
       .limit(limit)
-      .execute();
+      .getMany();
 
     return news;
   }
@@ -46,20 +46,32 @@ class NewsRepository implements INewsRepository {
     const news = await this.ormRepository
       .createQueryBuilder('news')
       .leftJoinAndSelect('news.author', 'author')
+      .select(['news.id', 'news.title', 'news.category', 'author.name'])
       .where('title ILIKE :title', { title: `%${title}%` })
-      .select(['news.id', 'title', 'subtitle', 'created_at', 'name'])
       .orderBy('created_at', 'DESC')
       .offset(offset)
       .limit(limit)
-      .execute();
+      .getMany();
 
     return news;
   }
 
   public async findById(id: string): Promise<News | undefined> {
-    const findNews = await this.ormRepository.findOne({
-      where: { id },
-    });
+    const findNews = await this.ormRepository
+      .createQueryBuilder('news')
+      .leftJoinAndSelect('news.author', 'author')
+      .select([
+        'news.id',
+        'news.title',
+        'news.subtitle',
+        'news.body',
+        'news.category',
+        'author.name',
+        'author.username',
+        'author.description',
+      ])
+      .where('news.id = :id', { id })
+      .getOne();
 
     return findNews;
   }

@@ -25,11 +25,13 @@ class MatriculationRepository implements IMatriculationRepository {
       .leftJoinAndSelect('matriculation.student', 'student')
       .where('student.username ILIKE :username', { username: `%${username}%` })
       .select([
-        'matriculation.id, active',
-        'type',
-        'created_at',
-        'finished_at',
-        'username',
+        'matriculation.id',
+        'matriculation.active',
+        'matriculation.type',
+        'matriculation.created_at',
+        'matriculation.finished_at',
+        'student.name',
+        'student.username',
       ])
       .orderBy('created_at', orderCreatedAt)
       .offset(offset)
@@ -46,7 +48,7 @@ class MatriculationRepository implements IMatriculationRepository {
       });
     }
 
-    const matriculations = await queryMatriculation.execute();
+    const matriculations = await queryMatriculation.getMany();
 
     return matriculations;
   }

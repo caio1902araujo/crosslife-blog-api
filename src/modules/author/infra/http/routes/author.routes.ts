@@ -10,43 +10,46 @@ const authorController = new AuthorController();
 
 authorRouter.get('/:username', authorController.show);
 
-authorRouter.get('/',
+authorRouter.get(
+  '/',
   ensureValidToken,
   ensureValidAdmin,
   celebrate({
-    [Segments.QUERY]:{
-      name: Joi.string(),
-      username: Joi.string(),
+    [Segments.QUERY]: {
+      name: Joi.string().default(''),
+      username: Joi.string().default(''),
       limit: Joi.number().default(10),
-      offset: Joi.number().default(0)
-    }
+      offset: Joi.number().default(0),
+    },
   }),
-  authorController.index
+  authorController.index,
 );
 
 authorRouter.delete(
   '/:id',
   celebrate({
     [Segments.PARAMS]: {
-      id: Joi.string().regex(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i, )
-    }
+      id: Joi.string().regex(
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+      ),
+    },
   }),
-  authorController.delete
+  authorController.delete,
 );
 
 authorRouter.post(
-	'/',
+  '/',
   ensureValidToken,
   ensureValidAdmin,
-	celebrate({
-		[Segments.BODY]: {
-			name: Joi.string().required(),
-			username: Joi.string().required(),
-			password: Joi.string().required(),
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+      username: Joi.string().required(),
+      password: Joi.string().required(),
       description: Joi.string(),
-		}
-	}),
-	authorController.create
+    },
+  }),
+  authorController.create,
 );
 
 export default authorRouter;

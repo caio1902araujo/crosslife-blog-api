@@ -71,7 +71,7 @@ class NewsController {
       offset,
     });
 
-    return response.json(instanceToInstance(news));
+    return response.json(news);
   }
 }
 

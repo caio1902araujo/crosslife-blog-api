@@ -3,7 +3,6 @@ import { container } from 'tsyringe';
 
 import ListNewsAuthorService from '@modules/news/services/ListNewsAuthorService';
 import IFindAllNewsByAuhorDTO from '@modules/news/dtos/IFindAllNewsByAuhorDTO';
-import { instanceToInstance } from 'class-transformer';
 
 class NewsAuthorController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -18,7 +17,7 @@ class NewsAuthorController {
       limit,
     });
 
-    return response.json(instanceToInstance(news));
+    return response.json(news);
   }
 }
 

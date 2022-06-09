@@ -22,11 +22,23 @@ class WorkoutRepository implements IWorkoutRepository {
     startDate,
     endDate,
   }: IFindAllWorkoutsOfTheWeekDTO): Promise<Workout[]> {
-    const workouts = await this.ormRepository.find({
-      where: {
-        date: Between(startDate, endDate),
-      },
-    });
+    const workouts = await this.ormRepository
+      .createQueryBuilder('workout')
+      .leftJoinAndSelect('workout.trainer', 'trainer')
+      .where('workout.date BETWEEN :startDate AND :endDate', {
+        startDate,
+        endDate,
+      })
+      .select([
+        'workout.id',
+        'workout.title',
+        'workout.description',
+        'workout.date',
+        'workout.video_url',
+        'trainer.name',
+      ])
+      .orderBy('date', 'ASC')
+      .getMany();
 
     return workouts;
   }

@@ -6,18 +6,23 @@ import IAuthorRepository from '@modules/author/repositories/IAuthorRepository';
 import ICreateAuthorDTO from '@modules/author/dtos/ICreateAuthorDTO';
 import IFindAllAuthorDTO from '@modules/author/dtos/IFindAllAuthorDTO';
 
-class AuthorRepository implements IAuthorRepository{
-	private ormRepository: Repository<Author>;
+class AuthorRepository implements IAuthorRepository {
+  private ormRepository: Repository<Author>;
 
-	constructor(){
-		this.ormRepository = getRepository(Author);
-	}
+  constructor() {
+    this.ormRepository = getRepository(Author);
+  }
 
-  public async delete(id:string) {
+  public async delete(id: string) {
     await this.ormRepository.delete(id);
   }
 
-  public async findAllAuthors({ name='', username='', offset=0, limit=10 }: IFindAllAuthorDTO): Promise<Author[]> {
+  public async findAllAuthors({
+    name,
+    username,
+    offset,
+    limit,
+  }: IFindAllAuthorDTO): Promise<Author[]> {
     const authors = await this.ormRepository.find({
       where: {
         name: ILike('%' + name + '%'),
@@ -30,31 +35,32 @@ class AuthorRepository implements IAuthorRepository{
     return authors;
   }
 
-	public async findById(id: string): Promise<Author | undefined> {
-		const findAuthor = await this.ormRepository.findOne({
-			where: { id },
-		});
+  public async findById(id: string): Promise<Author | undefined> {
+    const findAuthor = await this.ormRepository.findOne({
+      where: { id },
+    });
 
-		return findAuthor;
-	}
+    return findAuthor;
+  }
 
   public async findByUsername(username: string): Promise<Author | undefined> {
-		const findAuthor = await this.ormRepository.findOne({
-			where: { username },
-		});
+    const findAuthor = await this.ormRepository.findOne({
+      where: { username },
+      select: ['name', 'description'],
+    });
 
-		return findAuthor;
-	}
+    return findAuthor;
+  }
 
-  public async create(authorData: ICreateAuthorDTO): Promise<Author>{
+  public async create(authorData: ICreateAuthorDTO): Promise<Author> {
     const author = this.ormRepository.create(authorData);
 
     await this.ormRepository.save(author);
 
-    return author
+    return author;
   }
 
-  public async save(author: Author): Promise<Author>{
+  public async save(author: Author): Promise<Author> {
     return await this.ormRepository.save(author);
   }
 }

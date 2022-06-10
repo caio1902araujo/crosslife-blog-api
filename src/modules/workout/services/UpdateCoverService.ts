@@ -39,7 +39,7 @@ class UpdateWorkoutService {
     if (workout.trainer_id !== trainerId) {
       throw new AppError(
         'Esse usuário não tem permissão para fazer alterações nesse treino',
-        400,
+        403,
       );
     }
 

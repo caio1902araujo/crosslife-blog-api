@@ -7,41 +7,47 @@ import IStorageProvider from '@shared/container/providers/storageProvider/models
 
 import AppError from '@shared/errors/AppError';
 
-interface IRequest{
-	authorId: string,
-  categoryImage: string,
-	avatarFilename: string,
+interface IRequest {
+  authorId: string;
+  categoryImage: string;
+  avatarFilename: string;
 }
 
 @injectable()
-class UpdateAuthorAvatarService{
-	constructor(
-		@inject('AuthorRepository')
-		private authorRepository: IAuthorRepository,
+class UpdateAuthorAvatarService {
+  constructor(
+    @inject('AuthorRepository')
+    private authorRepository: IAuthorRepository,
 
-		@inject('StorageProvider')
-		private storageProvider: IStorageProvider,
-	){}
+    @inject('StorageProvider')
+    private storageProvider: IStorageProvider,
+  ) {}
 
-	public async execute({authorId, categoryImage, avatarFilename}: IRequest): Promise<Author>{
+  public async execute({
+    authorId,
+    categoryImage,
+    avatarFilename,
+  }: IRequest): Promise<Author> {
+    const author = await this.authorRepository.findById(authorId);
 
-		const author = await this.authorRepository.findById(authorId);
+    if (!author) {
+      throw new AppError('Autor(a) não encontrado(a)', 404);
+    }
 
-		if(!author){
-			throw new AppError('Somente usuários autenticados podem alterar o avatar', 401);
-		}
+    if (author.avatar) {
+      this.storageProvider.deleteFile({ categoryImage, file: author.avatar });
+    }
 
-		if(author.avatar){
-			this.storageProvider.deleteFile({categoryImage, file: author.avatar});
-		}
+    const fileName = await this.storageProvider.saveFile({
+      categoryImage,
+      file: avatarFilename,
+    });
 
-		const fileName = await this.storageProvider.saveFile({categoryImage, file: avatarFilename});
+    author.avatar = fileName;
+    this.authorRepository.save(author);
 
-		author.avatar = fileName;
-		this.authorRepository.save(author);
-
-		return author
-	}
+    return author;
+  }
 }
 
 export default UpdateAuthorAvatarService;

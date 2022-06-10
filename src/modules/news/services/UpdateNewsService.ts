@@ -39,7 +39,7 @@ class UpdateNewsService {
     if (news.author_id !== author_id) {
       throw new AppError(
         'Você não tem autorização para editar essa notícia',
-        400,
+        403,
       );
     }
 

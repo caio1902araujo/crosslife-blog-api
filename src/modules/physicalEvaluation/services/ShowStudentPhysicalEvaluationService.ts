@@ -8,30 +8,35 @@ import IStudentRepository from '@modules/student/repositories/IStudentRepository
 import AppError from '@shared/errors/AppError';
 
 @injectable()
-class ShowStudentPhysicalEvaluationService{
-	constructor(
-		@inject('PhysicalEvaluationRepository')
-		private physicalEvaluationRepository: IPhysicalEvaluationRepository,
+class ShowStudentPhysicalEvaluationService {
+  constructor(
+    @inject('PhysicalEvaluationRepository')
+    private physicalEvaluationRepository: IPhysicalEvaluationRepository,
 
     @inject('StudentRepository')
-		private studentRepository: IStudentRepository,
-	){}
+    private studentRepository: IStudentRepository,
+  ) {}
 
-	public async execute(student_id: string): Promise<PhysicalEvaluation> {
-		const student = await this.studentRepository.findById(student_id);
+  public async execute(student_id: string): Promise<PhysicalEvaluation> {
+    const student = await this.studentRepository.findById(student_id);
 
-		if(!student){
-			throw new AppError('Aluno(a) não encontrada.', 404);
-		}
-    const physicalEvaluation = await this.physicalEvaluationRepository.findPhysicalEvaluationFromStudent(student.id);
+    if (!student) {
+      throw new AppError('Aluno(a) não encontrado(a).', 404);
+    }
+    const physicalEvaluation =
+      await this.physicalEvaluationRepository.findPhysicalEvaluationFromStudent(
+        student.id,
+      );
 
-
-    if(!physicalEvaluation){
-      throw new AppError('Não encontramos nenhuma avaliação fisica para esse aluno(a)', 404)
+    if (!physicalEvaluation) {
+      throw new AppError(
+        'Não encontramos nenhuma avaliação fisica para esse(a) aluno(a)',
+        404,
+      );
     }
 
-		return physicalEvaluation;
-	}
+    return physicalEvaluation;
+  }
 }
 
 export default ShowStudentPhysicalEvaluationService;

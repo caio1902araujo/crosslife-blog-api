@@ -6,14 +6,14 @@ import IAuthorRepository from '../repositories/IAuthorRepository';
 @injectable()
 class DeleteAuthorService {
   constructor(
-		@inject('AuthorRepository')
-		private authorRepository: IAuthorRepository,
-	){}
+    @inject('AuthorRepository')
+    private authorRepository: IAuthorRepository,
+  ) {}
 
-  public async execute(id:string): Promise<void> {
+  public async execute(id: string): Promise<void> {
     const author = await this.authorRepository.findById(id);
 
-    if(!author){
+    if (!author) {
       throw new AppError('Esse Autor(a) não existe', 404);
     }
 

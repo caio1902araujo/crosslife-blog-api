@@ -40,21 +40,21 @@ class UpdateWorkoutService {
     if (workout.trainer_id !== trainer_id) {
       throw new AppError(
         'Você não tem autorização para editar esse treino',
-        400,
+        403,
       );
     }
 
     if (workout.date !== date) {
       if (isBefore(date, Date.now())) {
         throw new AppError(
-          'Você não pode escolher uma data que ja passou para um treino.',
+          'Você não pode escolher uma data que já passou para um treino.',
           400,
         );
       }
 
       if (getHours(date) < 8 || getHours(date) >= 18) {
         throw new AppError(
-          'Você so agendar treinos entre as 8hrs até as 17hrs',
+          'Você so agendar treinos entre as 8hrs até as 18hrs',
         );
       }
     }

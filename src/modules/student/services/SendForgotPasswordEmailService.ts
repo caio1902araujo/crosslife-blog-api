@@ -5,50 +5,55 @@ import IMailProvider from '@shared/container/providers/mailProvider/models/IMail
 import IStudentRepository from '../repositories/IStudentRepository';
 import IStudentTokenRepository from '../repositories/IStudentTokenRepository';
 
-import AppError from "@shared/errors/AppError";
+import AppError from '@shared/errors/AppError';
 
-interface IRequest{
-	email: string,
+interface IRequest {
+  email: string;
 }
 
 @injectable()
-class SendForgotPasswordEmailService{
-	constructor(
-		@inject('StudentRepository')
-		private studentRepository: IStudentRepository,
+class SendForgotPasswordEmailService {
+  constructor(
+    @inject('StudentRepository')
+    private studentRepository: IStudentRepository,
 
-		@inject('MailProvider')
-		private mailProvider: IMailProvider,
+    @inject('MailProvider')
+    private mailProvider: IMailProvider,
 
-		@inject('StudentTokenRepository')
-		private studentTokenRepository: IStudentTokenRepository,
-	){}
+    @inject('StudentTokenRepository')
+    private studentTokenRepository: IStudentTokenRepository,
+  ) {}
 
-	public async execute({email}: IRequest): Promise<void>{
-		const student = await this.studentRepository.findByEmail(email);
+  public async execute({ email }: IRequest): Promise<void> {
+    const student = await this.studentRepository.findByEmail(email);
 
-		if(!student){
-			throw new AppError('Esse aluno não existe', 400);
-		}
+    if (!student) {
+      throw new AppError('Esse(a) aluno(a) não existe', 404);
+    }
 
-		const {token} = await this.studentTokenRepository.generate(student.id);
-		const forgotPasswordTemplate = path.resolve(__dirname, '..', 'views', 'forgot_password.hbs');
+    const { token } = await this.studentTokenRepository.generate(student.id);
+    const forgotPasswordTemplate = path.resolve(
+      __dirname,
+      '..',
+      'views',
+      'forgot_password.hbs',
+    );
 
-		await this.mailProvider.sendMail({
-			to:{
-				name: student.name,
-				email: student.email,
-			},
-			subject: '[Crosslife] recuperação de senha',
-			templateData:{
-				file: forgotPasswordTemplate,
-				variables: {
-					name: student.name,
-					link: `${process.env.APP_WEB_URL}/reset_password?token=${token}`,
-				}
-			}
-		})
-	}
+    await this.mailProvider.sendMail({
+      to: {
+        name: student.name,
+        email: student.email,
+      },
+      subject: '[Crosslife] recuperação de senha',
+      templateData: {
+        file: forgotPasswordTemplate,
+        variables: {
+          name: student.name,
+          link: `${process.env.APP_WEB_URL}/reset_password?token=${token}`,
+        },
+      },
+    });
+  }
 }
 
 export default SendForgotPasswordEmailService;

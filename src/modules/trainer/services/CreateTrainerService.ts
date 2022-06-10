@@ -10,38 +10,45 @@ import AppError from '@shared/errors/AppError';
 
 @injectable()
 class CreateTrainerService {
-	constructor(
-		@inject('TrainerRepository')
-		private trainerRepository: ITrainerRepository,
+  constructor(
+    @inject('TrainerRepository')
+    private trainerRepository: ITrainerRepository,
 
-		@inject('HashProvider')
-		private hashProvider: IHashProvider
-	){}
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
+  ) {}
 
-	public async execute({name, username, password, email}: ICreateTrainerDTO): Promise<Trainer>{
-		const checkUsernameExist = await this.trainerRepository.findByUsername(username);
+  public async execute({
+    name,
+    username,
+    password,
+    email,
+  }: ICreateTrainerDTO): Promise<Trainer> {
+    const checkUsernameExist = await this.trainerRepository.findByUsername(
+      username,
+    );
 
-		if(checkUsernameExist){
-			throw new AppError('O nome de usuário ja esta em uso.', 400);
-		}
+    if (checkUsernameExist) {
+      throw new AppError('O nome de usuário já está em uso.', 400);
+    }
 
     const checkEmailExist = await this.trainerRepository.findByEmail(email);
 
-		if(checkEmailExist){
-			throw new AppError('O email ja esta em uso.', 400);
-		}
+    if (checkEmailExist) {
+      throw new AppError('O email já está em uso.', 400);
+    }
 
-		const passwordHashed = await this.hashProvider.generateHash(password);
+    const passwordHashed = await this.hashProvider.generateHash(password);
 
-		const trainer = this.trainerRepository.create({
-			name,
+    const trainer = this.trainerRepository.create({
+      name,
       email,
-			username,
-			password: passwordHashed,
-		});
+      username,
+      password: passwordHashed,
+    });
 
-		return trainer;
-	}
+    return trainer;
+  }
 }
 
 export default CreateTrainerService;

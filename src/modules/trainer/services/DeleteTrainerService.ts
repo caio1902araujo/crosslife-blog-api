@@ -6,15 +6,15 @@ import ITrainerRepository from '../repositories/ITrainerRepository';
 @injectable()
 class DeleteTrainerService {
   constructor(
-		@inject('TrainerRepository')
-		private trainerRepository: ITrainerRepository,
-	){}
+    @inject('TrainerRepository')
+    private trainerRepository: ITrainerRepository,
+  ) {}
 
-  public async execute(id:string): Promise<void> {
+  public async execute(id: string): Promise<void> {
     const trainer = await this.trainerRepository.findById(id);
 
-    if(!trainer){
-      throw new AppError('Esse treinador não existe', 404);
+    if (!trainer) {
+      throw new AppError('Esse(a) treinador(a) não existe', 404);
     }
 
     await this.trainerRepository.delete(id);

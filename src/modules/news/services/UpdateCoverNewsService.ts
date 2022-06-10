@@ -39,7 +39,7 @@ class UpdateCoverNewsService {
     if (news.author_id !== authorId) {
       throw new AppError(
         'Esse usuário não tem permissão para fazer alterações nessa notícia',
-        400,
+        403,
       );
     }
 

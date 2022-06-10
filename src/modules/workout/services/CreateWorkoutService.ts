@@ -23,13 +23,15 @@ class CreateWorkoutService {
   }: ICreateWorkoutDTO): Promise<Workout> {
     if (isBefore(date, Date.now())) {
       throw new AppError(
-        'Você não pode escolher uma data que ja passou para um treino.',
+        'Você não pode escolher uma data que já passou para um treino.',
         400,
       );
     }
     console.log(date.getHours());
     if (getHours(date) < 8 || getHours(date) >= 18) {
-      throw new AppError('Você so agendar treinos entre as 8hrs até as 17hrs');
+      throw new AppError(
+        'Você só pode agendar treinos entre as 8hrs até as 18hrs',
+      );
     }
 
     const workout = this.workoutRepository.create({

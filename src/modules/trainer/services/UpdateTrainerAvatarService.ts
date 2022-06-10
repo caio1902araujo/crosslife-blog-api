@@ -7,41 +7,47 @@ import IStorageProvider from '@shared/container/providers/storageProvider/models
 
 import AppError from '@shared/errors/AppError';
 
-interface IRequest{
-	trainerId: string,
-  categoryImage: string,
-	avatarFilename: string,
+interface IRequest {
+  trainerId: string;
+  categoryImage: string;
+  avatarFilename: string;
 }
 
 @injectable()
-class UpdateTrainerAvatarService{
-	constructor(
-		@inject('TrainerRepository')
-		private trainerRepository: ITrainerRepository,
+class UpdateTrainerAvatarService {
+  constructor(
+    @inject('TrainerRepository')
+    private trainerRepository: ITrainerRepository,
 
-		@inject('StorageProvider')
-		private storageProvider: IStorageProvider,
-	){}
+    @inject('StorageProvider')
+    private storageProvider: IStorageProvider,
+  ) {}
 
-	public async execute({trainerId, categoryImage, avatarFilename}: IRequest): Promise<Trainer>{
+  public async execute({
+    trainerId,
+    categoryImage,
+    avatarFilename,
+  }: IRequest): Promise<Trainer> {
+    const trainer = await this.trainerRepository.findById(trainerId);
 
-		const trainer = await this.trainerRepository.findById(trainerId);
+    if (!trainer) {
+      throw new AppError('Treinador(a) não encontrado(a)', 404);
+    }
 
-		if(!trainer){
-			throw new AppError('Somente usuários autenticados podem alterar o avatar', 401);
-		}
+    if (trainer.avatar) {
+      this.storageProvider.deleteFile({ categoryImage, file: trainer.avatar });
+    }
 
-		if(trainer.avatar){
-			this.storageProvider.deleteFile({ categoryImage, file: trainer.avatar });
-		}
+    const fileName = await this.storageProvider.saveFile({
+      categoryImage,
+      file: avatarFilename,
+    });
 
-		const fileName = await this.storageProvider.saveFile({ categoryImage, file: avatarFilename });
+    trainer.avatar = fileName;
+    this.trainerRepository.save(trainer);
 
-		trainer.avatar = fileName;
-		this.trainerRepository.save(trainer);
-
-		return trainer
-	}
+    return trainer;
+  }
 }
 
 export default UpdateTrainerAvatarService;

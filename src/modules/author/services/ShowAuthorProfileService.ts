@@ -7,21 +7,21 @@ import IAuthorRepository from '../repositories/IAuthorRepository';
 import AppError from '@shared/errors/AppError';
 
 @injectable()
-class ShowAuthorProfileService{
-	constructor(
-		@inject('AuthorRepository')
-		private authorRepository: IAuthorRepository,
-	){}
+class ShowAuthorProfileService {
+  constructor(
+    @inject('AuthorRepository')
+    private authorRepository: IAuthorRepository,
+  ) {}
 
-	public async execute(authorId: string): Promise<Author> {
-		const author = await this.authorRepository.findById(authorId);
+  public async execute(authorId: string): Promise<Author> {
+    const author = await this.authorRepository.findById(authorId);
 
-		if(!author){
-			throw new AppError('Autor(a) não encontrado(a).');
-		}
+    if (!author) {
+      throw new AppError('Autor(a) não encontrado(a).', 404);
+    }
 
-		return author;
-	}
+    return author;
+  }
 }
 
 export default ShowAuthorProfileService;

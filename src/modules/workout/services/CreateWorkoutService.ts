@@ -18,8 +18,8 @@ class CreateWorkoutService {
     title,
     description,
     date,
-    video_url,
-    trainer_id,
+    videoUrl,
+    trainerId,
   }: ICreateWorkoutDTO): Promise<Workout> {
     if (isBefore(date, Date.now())) {
       throw new AppError(
@@ -38,8 +38,8 @@ class CreateWorkoutService {
       title,
       description,
       date,
-      video_url,
-      trainer_id,
+      videoUrl,
+      trainerId,
     });
 
     return workout;

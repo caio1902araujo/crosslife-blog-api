@@ -41,12 +41,12 @@ class BudgetController {
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    const budgetId = request.params.id;
+    const id = request.params.id;
     const { expense, value, payday, observation } = request.body;
 
     const updateBudgetService = container.resolve(UpdateBudgetService);
     const budget = await updateBudgetService.execute({
-      budgetId,
+      id,
       expense,
       value,
       payday,

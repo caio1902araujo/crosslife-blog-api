@@ -24,7 +24,7 @@ class Author {
   @Exclude()
   avatar: string;
 
-  @Expose({ name: 'avatar_url' })
+  @Expose({ name: 'avatarUrl' })
   getAvatarUrl(): string | null {
     if (!this.avatar) return null;
     switch (uploadConfig.driver) {

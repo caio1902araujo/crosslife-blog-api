@@ -7,7 +7,7 @@ import IInventoryRepository from '../repositories/IInventoryRepository';
 import AppError from '@shared/errors/AppError';
 
 interface IRequest {
-  inventoryId: string;
+  id: string;
   product: string;
   quantity: number;
   note: string;
@@ -21,12 +21,12 @@ class UpdateInventoryService {
   ) {}
 
   public async execute({
-    inventoryId,
+    id,
     product,
     quantity,
     note,
   }: IRequest): Promise<Inventory> {
-    const inventory = await this.inventoryRepository.findById(inventoryId);
+    const inventory = await this.inventoryRepository.findById(id);
 
     if (!inventory) {
       throw new AppError('Produto não existe.', 404);

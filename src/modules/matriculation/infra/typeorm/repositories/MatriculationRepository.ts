@@ -28,12 +28,12 @@ class MatriculationRepository implements IMatriculationRepository {
         'matriculation.id',
         'matriculation.active',
         'matriculation.type',
-        'matriculation.created_at',
-        'matriculation.finished_at',
+        'matriculation.createdAt',
+        'matriculation.finishedAt',
         'student.name',
         'student.username',
       ])
-      .orderBy('created_at', orderCreatedAt)
+      .orderBy('createdAt', orderCreatedAt)
       .offset(offset)
       .limit(limit);
 

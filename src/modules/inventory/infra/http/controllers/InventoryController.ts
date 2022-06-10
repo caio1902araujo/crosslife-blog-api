@@ -40,12 +40,12 @@ class InventoryController {
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    const inventoryId = request.params.id;
+    const id = request.params.id;
     const { product, quantity, note } = request.body;
 
     const updateInventoryService = container.resolve(UpdateInventoryService);
     const inventory = await updateInventoryService.execute({
-      inventoryId,
+      id,
       product,
       quantity,
       note,

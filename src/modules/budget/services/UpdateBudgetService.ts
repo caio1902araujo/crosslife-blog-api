@@ -7,7 +7,7 @@ import IBudgetRepository from '../repositories/IBudgetRepository';
 import AppError from '@shared/errors/AppError';
 
 interface IRequest {
-  budgetId: string;
+  id: string;
   expense: string;
   value: number;
   payday: Date;
@@ -22,13 +22,13 @@ class UpdateBudgetService {
   ) {}
 
   public async execute({
-    budgetId,
+    id,
     expense,
     value,
     payday,
     observation,
   }: IRequest): Promise<Budget> {
-    const budget = await this.budgetRepository.findById(budgetId);
+    const budget = await this.budgetRepository.findById(id);
 
     if (!budget) {
       throw new AppError('Despesa não foi encontrada.', 404);

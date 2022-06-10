@@ -17,14 +17,14 @@ class CreateNewsService {
     subtitle,
     body,
     category,
-    author_id,
+    authorId,
   }: ICreateNewsDTO): Promise<News> {
     const news = this.newsRepository.create({
       title,
       subtitle,
       body,
       category,
-      author_id,
+      authorId,
     });
 
     return news;

@@ -1,11 +1,11 @@
-import {MigrationInterface, QueryRunner, Table} from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class CreateMatriculation1653686833455 implements MigrationInterface {
-
-    public async up(queryRunner: QueryRunner): Promise<void> {
-      await queryRunner.createTable(new Table({
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.createTable(
+      new Table({
         name: 'matriculation',
-        columns:[
+        columns: [
           {
             name: 'id',
             type: 'uuid',
@@ -15,41 +15,41 @@ export class CreateMatriculation1653686833455 implements MigrationInterface {
           },
           {
             name: 'active',
-            type: 'boolean'
+            type: 'boolean',
           },
           {
             name: 'type',
             type: 'varchar',
           },
           {
-						name: 'created_at',
-						type: 'timestamp',
-						default: 'now()',
-					},
-					{
-						name: 'finished_at',
-						type: 'timestamp',
-					},
+            name: 'createdAt',
+            type: 'timestamp',
+            default: 'now()',
+          },
           {
-						name: 'student_id',
-						type: 'uuid',
-					},
+            name: 'finishedAt',
+            type: 'timestamp',
+          },
+          {
+            name: 'studentId',
+            type: 'uuid',
+          },
         ],
         foreignKeys: [
-					{
-						name: 'MatriculationStudent',
-						referencedTableName: 'student',
-						referencedColumnNames: ['id'],
-						columnNames: ['student_id'],
+          {
+            name: 'MatriculationStudent',
+            referencedTableName: 'student',
+            referencedColumnNames: ['id'],
+            columnNames: ['studentId'],
             onDelete: 'CASCADE',
-						onUpdate: 'CASCADE',
-					}
-				]
-      }));
-    }
+            onUpdate: 'CASCADE',
+          },
+        ],
+      }),
+    );
+  }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-      await queryRunner.dropTable('matriculation');
-    }
-
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropTable('matriculation');
+  }
 }

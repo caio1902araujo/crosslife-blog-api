@@ -1,29 +1,36 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, CreateDateColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  JoinColumn,
+  CreateDateColumn,
+} from 'typeorm';
 import Student from '@modules/student/infra/typeorm/entities/Student';
 
 @Entity('matriculation')
-class Matriculation{
+class Matriculation {
   @PrimaryGeneratedColumn('uuid')
-  id: string
+  id: string;
 
   @Column('boolean')
-  active: boolean
+  active: boolean;
 
   @Column()
-  type: string
+  type: string;
 
   @CreateDateColumn()
-	created_at: Date
+  createdAt: Date;
 
   @Column('timestamp with time zone')
-  finished_at: Date
+  finishedAt: Date;
 
   @Column()
-  student_id: string
+  studentId: string;
 
   @OneToOne(() => Student)
-	@JoinColumn({name: 'student_id'})
-	student: Student
+  @JoinColumn({ name: 'studentId' })
+  student: Student;
 }
 
-export default Matriculation
+export default Matriculation;

@@ -8,10 +8,10 @@ import AppError from '@shared/errors/AppError';
 import { isBefore } from 'date-fns';
 
 interface IRequest {
-  matriculationId: string;
+  id: string;
   active: boolean;
   type: string;
-  finished_at: Date;
+  finishedAt: Date;
 }
 
 @injectable()
@@ -22,22 +22,20 @@ class UpdateMatriculationService {
   ) {}
 
   public async execute({
-    matriculationId,
+    id,
     active,
     type,
-    finished_at,
+    finishedAt,
   }: IRequest): Promise<Matriculation> {
-    const matriculation = await this.matriculationRepository.findById(
-      matriculationId,
-    );
+    const matriculation = await this.matriculationRepository.findById(id);
 
     if (!matriculation) {
       throw new AppError('Essa matrícula não existe.', 404);
     }
 
     if (
-      matriculation.finished_at !== finished_at &&
-      isBefore(finished_at, Date.now())
+      matriculation.finishedAt !== finishedAt &&
+      isBefore(finishedAt, Date.now())
     ) {
       throw new AppError(
         'Você não pode escolher uma data que ja passou para finalização de matrícula .',
@@ -47,7 +45,7 @@ class UpdateMatriculationService {
 
     matriculation.active = active;
     matriculation.type = type;
-    matriculation.finished_at = finished_at;
+    matriculation.finishedAt = finishedAt;
 
     return await this.matriculationRepository.save(matriculation);
   }

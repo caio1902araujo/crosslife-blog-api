@@ -12,7 +12,7 @@ interface IRequest {
   subtitle: string;
   body: string;
   category: string;
-  author_id: string;
+  authorId: string;
 }
 
 @injectable()
@@ -28,7 +28,7 @@ class UpdateNewsService {
     subtitle,
     body,
     category,
-    author_id,
+    authorId,
   }: IRequest): Promise<News> {
     const news = await this.newsRepository.findById(newsId);
 
@@ -36,7 +36,7 @@ class UpdateNewsService {
       throw new AppError('Notícia não foi encontrada.', 404);
     }
 
-    if (news.author_id !== author_id) {
+    if (news.authorId !== authorId) {
       throw new AppError(
         'Você não tem autorização para editar essa notícia',
         403,

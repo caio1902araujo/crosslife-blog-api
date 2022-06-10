@@ -34,7 +34,7 @@ studentProfileRouter.put(
       username: Joi.string(),
       password: Joi.string(),
       oldPassword: Joi.string(),
-      passwordconfirmation: Joi.string().valid(Joi.ref('password')),
+      passwordConfirmation: Joi.string().valid(Joi.ref('password')),
     },
   }),
   studentProfileController.update,

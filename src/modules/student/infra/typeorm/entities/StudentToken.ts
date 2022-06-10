@@ -1,22 +1,29 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Generated } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  Generated,
+} from 'typeorm';
 
-@Entity('student_tokens')
+@Entity('studentTokens')
 class StudentToken {
-	@PrimaryGeneratedColumn('uuid')
-	id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-	@Column()
-	@Generated('uuid')
-	token: string;
+  @Column()
+  @Generated('uuid')
+  token: string;
 
-	@Column()
-	student_id: string;
+  @Column()
+  studentId: string;
 
-	@CreateDateColumn()
-	created_at: Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
-	@UpdateDateColumn()
-	updated_at: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
 
 export default StudentToken;

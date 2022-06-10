@@ -2,8 +2,8 @@ interface ICreateWorkoutDTO {
   title: string;
   description: string;
   date: Date;
-  video_url: string;
-  trainer_id: string;
+  videoUrl: string;
+  trainerId: string;
 }
 
 export default ICreateWorkoutDTO;

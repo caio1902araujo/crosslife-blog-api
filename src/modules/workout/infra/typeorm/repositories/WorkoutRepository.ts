@@ -34,7 +34,7 @@ class WorkoutRepository implements IWorkoutRepository {
         'workout.title',
         'workout.description',
         'workout.date',
-        'workout.video_url',
+        'workout.videoUrl',
         'trainer.name',
       ])
       .orderBy('date', 'ASC')
@@ -44,7 +44,7 @@ class WorkoutRepository implements IWorkoutRepository {
   }
 
   public async findAllWorkouts({
-    trainer_id,
+    trainerId,
     title,
     dateOrder,
     offset,
@@ -53,7 +53,7 @@ class WorkoutRepository implements IWorkoutRepository {
     const workouts = await this.ormRepository.find({
       where: {
         title: ILike('%' + title + '%'),
-        trainer_id: trainer_id,
+        trainerId: trainerId,
       },
       order: { date: dateOrder },
       take: limit,

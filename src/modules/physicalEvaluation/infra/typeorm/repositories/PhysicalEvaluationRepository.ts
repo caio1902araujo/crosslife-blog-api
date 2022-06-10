@@ -19,21 +19,21 @@ class PhysicalEvaluationRepository implements IPhysicalEvaluationRepository {
     limit,
   }: IFindAllPhysicalEvaluationDTO): Promise<PhysicalEvaluation[]> {
     const physicalEvaluation = await this.ormRepository
-      .createQueryBuilder('physical_evaluation')
-      .leftJoinAndSelect('physical_evaluation.student', 'student')
+      .createQueryBuilder('physicalEvaluation')
+      .leftJoinAndSelect('physicalEvaluation.student', 'student')
       .where('student.name ILIKE :name AND student.username ILIKE :username', {
         name: `%${name}%`,
         username: `%${username}%`,
       })
       .select([
-        'physical_evaluation.id',
-        'physical_evaluation.fat_mass',
-        'physical_evaluation.lean_mass',
-        'physical_evaluation.muscle_mass',
-        'physical_evaluation.bone_density',
-        'physical_evaluation.visceral_fat',
-        'physical_evaluation.basal_metabolism',
-        'physical_evaluation.hydration',
+        'physicalEvaluation.id',
+        'physicalEvaluation.fatMass',
+        'physicalEvaluation.leanMass',
+        'physicalEvaluation.muscleMass',
+        'physicalEvaluation.boneDensity',
+        'physicalEvaluation.visceralFat',
+        'physicalEvaluation.basalMetabolism',
+        'physicalEvaluation.hydration',
         'student.name',
         'student.username',
       ])
@@ -45,10 +45,10 @@ class PhysicalEvaluationRepository implements IPhysicalEvaluationRepository {
   }
 
   public async findPhysicalEvaluationFromStudent(
-    student_id: string,
+    studentId: string,
   ): Promise<PhysicalEvaluation | undefined> {
     const findPhysicalEvaluation = await this.ormRepository.findOne({
-      where: { student_id },
+      where: { studentId },
     });
 
     return findPhysicalEvaluation;

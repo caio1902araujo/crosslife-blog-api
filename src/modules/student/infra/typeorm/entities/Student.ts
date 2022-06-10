@@ -1,56 +1,69 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinTable, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  JoinTable,
+  JoinColumn,
+} from 'typeorm';
 import { Exclude, Expose } from 'class-transformer';
 import uploadConfig from '@config/upload';
 import PhysicalEvaluation from '@modules/physicalEvaluation/infra/typeorm/entities/PhysicalEvaluation';
 import Matriculation from '@modules/matriculation/infra/typeorm/entities/Matriculation';
 
 @Entity('student')
-class Student{
+class Student {
   @PrimaryGeneratedColumn('uuid')
-  id: string
+  id: string;
 
   @Column()
-  name: string
+  name: string;
 
   @Column()
-  email: string
+  email: string;
 
   @Column()
-  telephone: string
+  telephone: string;
 
   @Column()
-  cpf:string
+  cpf: string;
 
   @Column()
-  username: string
+  username: string;
 
   @Column()
   @Exclude()
-  password: string
+  password: string;
 
   @Column()
-  avatar: string
+  avatar: string;
 
-  @Expose({ name: 'avatar_url' })
+  @Expose({ name: 'avatarUrl' })
   getAvatarUrl(): string | null {
     if (!this.avatar) return null;
     switch (uploadConfig.driver) {
       case 'disk':
         return `${process.env.APP_API_URL}/files/${this.avatar}`;
       case 'firebase':
-        return `https://storage.googleapis.com/${process.env.BUCKET}/students/${this.avatar}`
+        return `https://storage.googleapis.com/${process.env.BUCKET}/students/${this.avatar}`;
       default:
         return null;
     }
   }
 
-  @OneToOne(() => PhysicalEvaluation, physicalEvaluations => physicalEvaluations.student, {cascade:['insert']})
+  @OneToOne(
+    () => PhysicalEvaluation,
+    (physicalEvaluations) => physicalEvaluations.student,
+    { cascade: ['insert'] },
+  )
   @Exclude()
-  physicalEvaluation: PhysicalEvaluation
+  physicalEvaluation: PhysicalEvaluation;
 
-  @OneToOne(() => Matriculation, matriculation => matriculation.student, {cascade:['insert']})
+  @OneToOne(() => Matriculation, (matriculation) => matriculation.student, {
+    cascade: ['insert'],
+  })
   @Exclude()
-  matriculation: Matriculation
+  matriculation: Matriculation;
 }
 
-export default Student
+export default Student;

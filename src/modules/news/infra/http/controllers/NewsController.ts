@@ -28,7 +28,7 @@ class NewsController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const author_id = request.author.id;
+    const authorId = request.author.id;
     const { title, subtitle, body, category } = request.body;
 
     const createNewsService = container.resolve(CreateNewsService);
@@ -37,7 +37,7 @@ class NewsController {
       subtitle,
       body,
       category,
-      author_id,
+      authorId,
     });
 
     return response.json(instanceToInstance(news));
@@ -45,7 +45,7 @@ class NewsController {
 
   public async update(request: Request, response: Response): Promise<Response> {
     const newsId = request.params.id;
-    const author_id = request.author.id;
+    const authorId = request.author.id;
     const { title, subtitle, body, category } = request.body;
 
     const updateNewsService = container.resolve(UpdateNewsService);
@@ -55,7 +55,7 @@ class NewsController {
       subtitle,
       body,
       category,
-      author_id,
+      authorId,
     });
 
     return response.json(instanceToInstance(news));

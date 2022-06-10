@@ -11,44 +11,52 @@ const physicalEvaluationController = new PhysicalEvaluationController();
 
 physicalEvaluationRouter.use(ensureValidToken, ensureValidAdmin);
 
-physicalEvaluationRouter.get('/',
-celebrate({
-  [Segments.QUERY]:{
-    name: Joi.string().default(''),
-    username: Joi.string().default(''),
-    limit: Joi.number().default(10),
-    offset: Joi.number().default(0)
-  }
-}),
-physicalEvaluationController.index);
+physicalEvaluationRouter.get(
+  '/',
+  celebrate({
+    [Segments.QUERY]: {
+      name: Joi.string().default(''),
+      username: Joi.string().default(''),
+      limit: Joi.number().default(10),
+      offset: Joi.number().default(0),
+    },
+  }),
+  physicalEvaluationController.index,
+);
 
-physicalEvaluationRouter.get('/:id',
-celebrate({
-  [Segments.PARAMS]: {
-    id: Joi.string().regex(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i, )
-  }
-}),
-physicalEvaluationController.show);
-
-physicalEvaluationRouter.put(
-	'/:id',
+physicalEvaluationRouter.get(
+  '/:id',
   celebrate({
     [Segments.PARAMS]: {
-      id: Joi.string().regex(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i, )
-    }
+      id: Joi.string().regex(
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+      ),
+    },
   }),
-	celebrate({
-		[Segments.BODY]: {
-      fat_mass: Joi.number(),
-      lean_mass: Joi.number(),
-      muscle_mass: Joi.number(),
-      bone_density: Joi.number(),
-      visceral_fat: Joi.number(),
-      basal_metabolism: Joi.number(),
+  physicalEvaluationController.show,
+);
+
+physicalEvaluationRouter.put(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().regex(
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+      ),
+    },
+  }),
+  celebrate({
+    [Segments.BODY]: {
+      fatMass: Joi.number(),
+      leanMass: Joi.number(),
+      muscleMass: Joi.number(),
+      boneDensity: Joi.number(),
+      visceralFat: Joi.number(),
+      basalMetabolism: Joi.number(),
       hydration: Joi.number(),
-		}
-	}),
-	physicalEvaluationController.update
+    },
+  }),
+  physicalEvaluationController.update,
 );
 
 export default physicalEvaluationRouter;

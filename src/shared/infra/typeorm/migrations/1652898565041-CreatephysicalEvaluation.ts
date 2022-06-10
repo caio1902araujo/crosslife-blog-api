@@ -1,11 +1,13 @@
-import {MigrationInterface, QueryRunner, Table} from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreatephysicalEvaluation1652898565041 implements MigrationInterface {
-
-    public async up(queryRunner: QueryRunner): Promise<void> {
-      await queryRunner.createTable(new Table({
-        name: 'physical_evaluation',
-        columns:[
+export class CreatephysicalEvaluation1652898565041
+  implements MigrationInterface
+{
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.createTable(
+      new Table({
+        name: 'physicalEvaluation',
+        columns: [
           {
             name: 'id',
             type: 'uuid',
@@ -14,53 +16,53 @@ export class CreatephysicalEvaluation1652898565041 implements MigrationInterface
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'fat_mass',
-            type: 'float'
-          },
-          {
-            name: 'lean_mass',
+            name: 'fatMass',
             type: 'float',
           },
           {
-            name: 'muscle_mass',
+            name: 'leanMass',
             type: 'float',
           },
           {
-            name: 'bone_density',
+            name: 'muscleMass',
             type: 'float',
           },
           {
-            name: 'visceral_fat',
+            name: 'boneDensity',
             type: 'float',
           },
           {
-            name: 'basal_metabolism',
-            type: 'float'
+            name: 'visceralFat',
+            type: 'float',
+          },
+          {
+            name: 'basalMetabolism',
+            type: 'float',
           },
           {
             name: 'hydration',
             type: 'float',
           },
           {
-						name: 'student_id',
-						type: 'uuid',
-					},
+            name: 'studentId',
+            type: 'uuid',
+          },
         ],
         foreignKeys: [
-					{
-						name: 'PhysicalEvaluationStudent',
-						referencedTableName: 'student',
-						referencedColumnNames: ['id'],
-						columnNames: ['student_id'],
-						onDelete: 'CASCADE',
-						onUpdate: 'CASCADE',
-					}
-				]
-      }));
-    }
+          {
+            name: 'PhysicalEvaluationStudent',
+            referencedTableName: 'student',
+            referencedColumnNames: ['id'],
+            columnNames: ['studentId'],
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+          },
+        ],
+      }),
+    );
+  }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-      queryRunner.dropTable('physical_evaluation');
-    }
-
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    queryRunner.dropTable('physicalEvaluation');
+  }
 }

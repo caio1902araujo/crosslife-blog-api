@@ -8,7 +8,7 @@ import IHashProvider from '@shared/container/providers/hashProvider/models/IHash
 import AppError from '@shared/errors/AppError';
 
 interface IRequest {
-  studentId: string;
+  id: string;
   name: string;
   email: string;
   telephone: string;
@@ -28,7 +28,7 @@ class UpdateStudentProfileService {
   ) {}
 
   public async execute({
-    studentId,
+    id,
     name,
     email,
     username,
@@ -36,7 +36,7 @@ class UpdateStudentProfileService {
     oldPassword,
     password,
   }: IRequest): Promise<Student> {
-    const student = await this.studentRepository.findById(studentId);
+    const student = await this.studentRepository.findById(id);
 
     if (!student) {
       throw new AppError('Aluno(a) não existe.', 404);
@@ -45,10 +45,7 @@ class UpdateStudentProfileService {
     const studentWithUpdatedUsername =
       await this.studentRepository.findByUsername(username);
 
-    if (
-      studentWithUpdatedUsername &&
-      studentWithUpdatedUsername.id !== studentId
-    ) {
+    if (studentWithUpdatedUsername && studentWithUpdatedUsername.id !== id) {
       throw new AppError('Esse nome de usuário já está em uso', 400);
     }
 
@@ -56,7 +53,7 @@ class UpdateStudentProfileService {
       email,
     );
 
-    if (studentWithUpdatedEmail && studentWithUpdatedEmail.id !== studentId) {
+    if (studentWithUpdatedEmail && studentWithUpdatedEmail.id !== id) {
       throw new AppError('Esse email já está em uso', 400);
     }
 

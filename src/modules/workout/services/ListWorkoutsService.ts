@@ -13,14 +13,14 @@ class ListWorkoutsService {
   ) {}
 
   public async execute({
-    trainer_id,
+    trainerId,
     title,
     dateOrder,
     limit,
     offset,
   }: IFindAllWorkoutDTO): Promise<Workout[]> {
     const workouts = await this.workoutRepository.findAllWorkouts({
-      trainer_id,
+      trainerId,
       title,
       dateOrder,
       limit,

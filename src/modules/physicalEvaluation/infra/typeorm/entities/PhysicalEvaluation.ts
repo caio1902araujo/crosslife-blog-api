@@ -1,38 +1,44 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 import Student from '@modules/student/infra/typeorm/entities/Student';
 
-@Entity('physical_evaluation')
-class PhysicalEvaluation{
+@Entity('physicalEvaluation')
+class PhysicalEvaluation {
   @PrimaryGeneratedColumn('uuid')
-  id: string
+  id: string;
 
   @Column('float')
-  fat_mass: number
+  fatMass: number;
 
   @Column('float')
-  lean_mass: number
+  leanMass: number;
 
   @Column('float')
-  muscle_mass: number
+  muscleMass: number;
 
   @Column('float')
-  bone_density: number
+  boneDensity: number;
 
   @Column('float')
-  visceral_fat: number
+  visceralFat: number;
 
   @Column('float')
-  basal_metabolism: number
+  basalMetabolism: number;
 
   @Column('float')
-  hydration: number
+  hydration: number;
 
   @Column()
-  student_id: string
+  studentId: string;
 
   @OneToOne(() => Student)
-	@JoinColumn({name: 'student_id'})
-	student: Student
+  @JoinColumn({ name: 'studentId' })
+  student: Student;
 }
 
-export default PhysicalEvaluation
+export default PhysicalEvaluation;

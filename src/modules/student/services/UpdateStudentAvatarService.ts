@@ -8,7 +8,7 @@ import IStorageProvider from '@shared/container/providers/storageProvider/models
 import AppError from '@shared/errors/AppError';
 
 interface IRequest {
-  studentId: string;
+  id: string;
   categoryImage: string;
   avatarFilename: string;
 }
@@ -24,11 +24,11 @@ class UpdateStudentAvatarService {
   ) {}
 
   public async execute({
-    studentId,
+    id,
     categoryImage,
     avatarFilename,
   }: IRequest): Promise<Student> {
-    const student = await this.studentRepository.findById(studentId);
+    const student = await this.studentRepository.findById(id);
 
     if (!student) {
       throw new AppError('Aluno(a) não existe.', 404);

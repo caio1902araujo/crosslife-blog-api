@@ -1,5 +1,5 @@
 interface IFindAllWorkoutsDTO {
-  trainer_id?: string;
+  trainerId?: string;
   title?: string;
   dateOrder?: 'DESC' | 'ASC';
   offset?: number;

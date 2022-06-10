@@ -12,20 +12,12 @@ class ShowStudentPhysicalEvaluationService {
   constructor(
     @inject('PhysicalEvaluationRepository')
     private physicalEvaluationRepository: IPhysicalEvaluationRepository,
-
-    @inject('StudentRepository')
-    private studentRepository: IStudentRepository,
   ) {}
 
-  public async execute(student_id: string): Promise<PhysicalEvaluation> {
-    const student = await this.studentRepository.findById(student_id);
-
-    if (!student) {
-      throw new AppError('Aluno(a) não encontrado(a).', 404);
-    }
+  public async execute(studentId: string): Promise<PhysicalEvaluation> {
     const physicalEvaluation =
       await this.physicalEvaluationRepository.findPhysicalEvaluationFromStudent(
-        student.id,
+        studentId,
       );
 
     if (!physicalEvaluation) {

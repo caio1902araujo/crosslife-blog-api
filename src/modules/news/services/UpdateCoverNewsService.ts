@@ -36,7 +36,7 @@ class UpdateCoverNewsService {
       throw new AppError('Essa notícia não existe', 404);
     }
 
-    if (news.author_id !== authorId) {
+    if (news.authorId !== authorId) {
       throw new AppError(
         'Esse usuário não tem permissão para fazer alterações nessa notícia',
         403,

@@ -12,8 +12,8 @@ interface IRequest {
   title: string;
   description: string;
   date: Date;
-  video_url: string;
-  trainer_id: string;
+  videoUrl: string;
+  trainerId: string;
 }
 
 @injectable()
@@ -28,8 +28,8 @@ class UpdateWorkoutService {
     title,
     description,
     date,
-    video_url,
-    trainer_id,
+    videoUrl,
+    trainerId,
   }: IRequest): Promise<Workout> {
     const workout = await this.workoutRepository.findById(workoutId);
 
@@ -37,7 +37,7 @@ class UpdateWorkoutService {
       throw new AppError('Treino não foi encontrado.', 404);
     }
 
-    if (workout.trainer_id !== trainer_id) {
+    if (workout.trainerId !== trainerId) {
       throw new AppError(
         'Você não tem autorização para editar esse treino',
         403,
@@ -62,7 +62,7 @@ class UpdateWorkoutService {
     workout.title = title;
     workout.description = description;
     workout.date = date;
-    workout.video_url = video_url;
+    workout.videoUrl = videoUrl;
 
     return await this.workoutRepository.save(workout);
   }

@@ -26,7 +26,7 @@ export class CreateWorkouts1654197772216 implements MigrationInterface {
             type: 'timestamp with time zone',
           },
           {
-            name: 'video_url',
+            name: 'videoUrl',
             type: 'varchar',
             isNullable: true,
           },
@@ -36,7 +36,7 @@ export class CreateWorkouts1654197772216 implements MigrationInterface {
             isNullable: true,
           },
           {
-            name: 'trainer_id',
+            name: 'trainerId',
             type: 'uuid',
           },
         ],
@@ -45,7 +45,7 @@ export class CreateWorkouts1654197772216 implements MigrationInterface {
             name: 'WeeklyWorkoutsTrainer',
             referencedTableName: 'trainer',
             referencedColumnNames: ['id'],
-            columnNames: ['trainer_id'],
+            columnNames: ['trainerId'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },

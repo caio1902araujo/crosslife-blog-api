@@ -31,16 +31,16 @@ class News {
   category: string;
 
   @CreateDateColumn()
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updatedAt: Date;
 
   @Column()
   @Exclude()
   cover: string;
 
-  @Expose({ name: 'cover_url' })
+  @Expose({ name: 'coverUrl' })
   getAvatarUrl(): string | null {
     if (!this.cover) return null;
     switch (uploadConfig.driver) {
@@ -54,10 +54,10 @@ class News {
   }
 
   @Column()
-  author_id: string;
+  authorId: string;
 
   @ManyToOne(() => Author)
-  @JoinColumn({ name: 'author_id' })
+  @JoinColumn({ name: 'authorId' })
   author: Author;
 }
 

@@ -26,13 +26,13 @@ class Workout {
   date: Date;
 
   @Column()
-  video_url: string;
+  videoUrl: string;
 
   @Column()
   @Exclude()
   cover: string;
 
-  @Expose({ name: 'cover_url' })
+  @Expose({ name: 'coverUrl' })
   getAvatarUrl(): string | null {
     if (!this.cover) return null;
     switch (uploadConfig.driver) {
@@ -46,10 +46,10 @@ class Workout {
   }
 
   @Column()
-  trainer_id: string;
+  trainerId: string;
 
   @ManyToOne(() => Trainer)
-  @JoinColumn({ name: 'trainer_id' })
+  @JoinColumn({ name: 'trainerId' })
   trainer: Trainer;
 }
 

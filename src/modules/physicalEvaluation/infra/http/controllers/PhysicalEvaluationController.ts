@@ -6,41 +6,60 @@ import ShowPhysicalEvaluationService from '@modules/physicalEvaluation/services/
 import ListPhysicalEvaluationsService from '@modules/physicalEvaluation/services/ListPhysicalEvaluationsService';
 import IFindAllPhysicalEvaluationDTO from '@modules/physicalEvaluation/dtos/IFindAllPhysicalEvaluationDTO';
 
-class PhysicalEvaluationController{
-
-  public async update(request: Request, response: Response): Promise<Response>{
-    const {fat_mass, lean_mass, muscle_mass, bone_density, visceral_fat, basal_metabolism, hydration } = request.body;
+class PhysicalEvaluationController {
+  public async update(request: Request, response: Response): Promise<Response> {
+    const {
+      fatMass,
+      leanMass,
+      muscleMass,
+      boneDensity,
+      visceralFat,
+      basalMetabolism,
+      hydration,
+    } = request.body;
     const { id } = request.params;
 
-    const updatePhysicalEvaluationService = container.resolve(UpdatePhysicalEvaluationService);
+    const updatePhysicalEvaluationService = container.resolve(
+      UpdatePhysicalEvaluationService,
+    );
 
-    const physicalEvaluation =  await updatePhysicalEvaluationService.execute({
-      physicalEvaluationId: id,
-      fat_mass,
-      lean_mass,
-      muscle_mass,
-      bone_density,
-      visceral_fat,
-      basal_metabolism,
+    const physicalEvaluation = await updatePhysicalEvaluationService.execute({
+      id,
+      fatMass,
+      leanMass,
+      muscleMass,
+      boneDensity,
+      visceralFat,
+      basalMetabolism,
       hydration,
     });
 
     return response.json(physicalEvaluation);
   }
 
-  public async show(request: Request, response: Response): Promise<Response>{
+  public async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
-    const showPhysicalEvaluationService = container.resolve(ShowPhysicalEvaluationService);
+    const showPhysicalEvaluationService = container.resolve(
+      ShowPhysicalEvaluationService,
+    );
     const physicalEvaluation = await showPhysicalEvaluationService.execute(id);
 
     return response.json(physicalEvaluation);
   }
 
-  public async index(request: Request, response: Response): Promise<Response>{
-    const { name, username, limit, offset } = request.query as IFindAllPhysicalEvaluationDTO;
+  public async index(request: Request, response: Response): Promise<Response> {
+    const { name, username, limit, offset } =
+      request.query as IFindAllPhysicalEvaluationDTO;
 
-    const listPhysicalEvaluationsService = container.resolve(ListPhysicalEvaluationsService);
-		const physicalEvaluations = await listPhysicalEvaluationsService.execute({ name, username, offset, limit});
+    const listPhysicalEvaluationsService = container.resolve(
+      ListPhysicalEvaluationsService,
+    );
+    const physicalEvaluations = await listPhysicalEvaluationsService.execute({
+      name,
+      username,
+      offset,
+      limit,
+    });
 
     return response.json(physicalEvaluations);
   }

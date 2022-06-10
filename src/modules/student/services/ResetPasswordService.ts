@@ -33,14 +33,14 @@ class ResetPasswordService {
     }
 
     const student = await this.studentRepository.findById(
-      studentToken.student_id,
+      studentToken.studentId,
     );
 
     if (!student) {
       throw new AppError('Esse(a) Aluno(a) não existe.', 404);
     }
 
-    const tokenCreateAt = studentToken.created_at;
+    const tokenCreateAt = studentToken.createdAt;
 
     if (differenceInHours(new Date(Date.now()), tokenCreateAt) > 2) {
       throw new AppError('Token expirado', 401);

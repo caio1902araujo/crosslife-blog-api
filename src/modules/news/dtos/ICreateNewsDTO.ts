@@ -3,7 +3,7 @@ interface ICreateNewsDTO {
   subtitle: string;
   body: string;
   category: string;
-  author_id: string;
+  authorId: string;
 }
 
 export default ICreateNewsDTO;

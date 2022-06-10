@@ -3,38 +3,38 @@ import { Exclude, Expose } from 'class-transformer';
 import uploadConfig from '@config/upload';
 
 @Entity('trainer')
-class Trainer{
+class Trainer {
   @PrimaryGeneratedColumn('uuid')
-  id: string
+  id: string;
 
   @Column()
-  name: string
+  name: string;
 
   @Column()
-  email: string
+  email: string;
 
   @Column()
-  username: string
+  username: string;
 
   @Column()
   @Exclude()
-  password: string
+  password: string;
 
   @Column()
-  avatar: string
+  avatar: string;
 
-  @Expose({ name: 'avatar_url' })
+  @Expose({ name: 'avatarUrl' })
   getAvatarUrl(): string | null {
     if (!this.avatar) return null;
     switch (uploadConfig.driver) {
       case 'disk':
         return `${process.env.APP_API_URL}/files/${this.avatar}`;
       case 'firebase':
-        return `https://storage.googleapis.com/${process.env.BUCKET}/trainers/${this.avatar}`
+        return `https://storage.googleapis.com/${process.env.BUCKET}/trainers/${this.avatar}`;
       default:
         return null;
     }
   }
 }
 
-export default Trainer
+export default Trainer;

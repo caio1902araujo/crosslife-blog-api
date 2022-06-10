@@ -28,16 +28,16 @@ class WorkoutController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const trainer_id = request.trainer.id;
-    const { title, description, date, video_url } = request.body;
+    const trainerId = request.trainer.id;
+    const { title, description, date, videoUrl } = request.body;
 
     const createWorkoutService = container.resolve(CreateWorkoutService);
     const workout = await createWorkoutService.execute({
       title,
       description,
       date,
-      video_url,
-      trainer_id,
+      videoUrl,
+      trainerId,
     });
 
     return response.json(instanceToInstance(workout));
@@ -45,8 +45,8 @@ class WorkoutController {
 
   public async update(request: Request, response: Response): Promise<Response> {
     const workoutId = request.params.id;
-    const trainer_id = request.trainer.id;
-    const { title, description, date, video_url } = request.body;
+    const trainerId = request.trainer.id;
+    const { title, description, date, videoUrl } = request.body;
 
     const updateWorkoutService = container.resolve(UpdateWorkoutService);
     const workout = await updateWorkoutService.execute({
@@ -54,21 +54,21 @@ class WorkoutController {
       title,
       description,
       date,
-      video_url,
-      trainer_id,
+      videoUrl,
+      trainerId,
     });
 
     return response.json(instanceToInstance(workout));
   }
 
   public async index(request: Request, response: Response): Promise<Response> {
-    const trainer_id = request.trainer.id;
+    const trainerId = request.trainer.id;
     const { title, dateOrder, offset, limit } =
       request.query as IFindAllWorkoutsDTO;
 
     const listWorkoutsService = container.resolve(ListWorkoutsService);
     const workout = await listWorkoutsService.execute({
-      trainer_id,
+      trainerId,
       title,
       dateOrder,
       limit,

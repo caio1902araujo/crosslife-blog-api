@@ -7,13 +7,13 @@ import IPhysicalEvaluationRepository from '../repositories/IPhysicalEvaluationRe
 import AppError from '@shared/errors/AppError';
 
 interface IRequest {
-  physicalEvaluationId: string;
-  fat_mass: number;
-  lean_mass: number;
-  muscle_mass: number;
-  bone_density: number;
-  visceral_fat: number;
-  basal_metabolism: number;
+  id: string;
+  fatMass: number;
+  leanMass: number;
+  muscleMass: number;
+  boneDensity: number;
+  visceralFat: number;
+  basalMetabolism: number;
   hydration: number;
 }
 
@@ -25,29 +25,29 @@ class UpdatePhysicalEvaluationService {
   ) {}
 
   public async execute({
-    physicalEvaluationId,
-    fat_mass,
-    lean_mass,
-    muscle_mass,
-    bone_density,
-    visceral_fat,
-    basal_metabolism,
+    id,
+    fatMass,
+    leanMass,
+    muscleMass,
+    boneDensity,
+    visceralFat,
+    basalMetabolism,
     hydration,
   }: IRequest): Promise<PhysicalEvaluation> {
     const physicalEvaluation = await this.physicalEvaluationRepository.findById(
-      physicalEvaluationId,
+      id,
     );
 
     if (!physicalEvaluation) {
       throw new AppError('Avaliação física não encontrada.', 404);
     }
 
-    physicalEvaluation.fat_mass = fat_mass;
-    physicalEvaluation.lean_mass = lean_mass;
-    physicalEvaluation.muscle_mass = muscle_mass;
-    physicalEvaluation.bone_density = bone_density;
-    physicalEvaluation.visceral_fat = visceral_fat;
-    physicalEvaluation.basal_metabolism = basal_metabolism;
+    physicalEvaluation.fatMass = fatMass;
+    physicalEvaluation.leanMass = leanMass;
+    physicalEvaluation.muscleMass = muscleMass;
+    physicalEvaluation.boneDensity = boneDensity;
+    physicalEvaluation.visceralFat = visceralFat;
+    physicalEvaluation.basalMetabolism = basalMetabolism;
     physicalEvaluation.hydration = hydration;
 
     return await this.physicalEvaluationRepository.save(physicalEvaluation);

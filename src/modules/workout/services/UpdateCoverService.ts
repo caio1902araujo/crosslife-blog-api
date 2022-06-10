@@ -36,7 +36,7 @@ class UpdateWorkoutService {
       throw new AppError('Esse treino não existe', 401);
     }
 
-    if (workout.trainer_id !== trainerId) {
+    if (workout.trainerId !== trainerId) {
       throw new AppError(
         'Esse usuário não tem permissão para fazer alterações nesse treino',
         403,

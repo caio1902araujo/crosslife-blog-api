@@ -14,26 +14,29 @@ const upload = multer(uploadConfig);
 const authorProfileController = new AuthorProfileController();
 const authorAvatarController = new AuthorAvatarController();
 
-authorProfileRouter.use(ensureValidToken);
-authorProfileRouter.use(ensureValidAuthor);
+authorProfileRouter.use(ensureValidToken, ensureValidAuthor);
 
 authorProfileRouter.get('/', authorProfileController.show);
 
-authorProfileRouter.patch('/avatar', upload.single('avatar'), authorAvatarController.update);
+authorProfileRouter.patch(
+  '/avatar',
+  upload.single('avatar'),
+  authorAvatarController.update,
+);
 
 authorProfileRouter.put(
-	'/',
-	celebrate({
-		[Segments.BODY]: {
-			name: Joi.string(),
+  '/',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string(),
       description: Joi.string(),
-			username: Joi.string(),
-			password: Joi.string(),
+      username: Joi.string(),
+      password: Joi.string(),
       oldPassword: Joi.string(),
-			passwordConfirmation: Joi.string().valid(Joi.ref('password')),
-		}
-	}),
-	authorProfileController.update
+      passwordConfirmation: Joi.string().valid(Joi.ref('password')),
+    },
+  }),
+  authorProfileController.update,
 );
 
 export default authorProfileRouter;

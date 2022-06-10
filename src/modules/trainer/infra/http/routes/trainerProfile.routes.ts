@@ -14,26 +14,29 @@ const upload = multer(uploadConfig);
 const trainerProfileController = new TrainerProfileController();
 const trainerAvatarController = new TrainerAvatarController();
 
-trainerProfileRouter.use(ensureValidToken);
-trainerProfileRouter.use(ensureValidTrainer);
+trainerProfileRouter.use(ensureValidToken, ensureValidTrainer);
 
 trainerProfileRouter.get('/', trainerProfileController.show);
 
-trainerProfileRouter.patch('/avatar', upload.single('avatar'), trainerAvatarController.update);
+trainerProfileRouter.patch(
+  '/avatar',
+  upload.single('avatar'),
+  trainerAvatarController.update,
+);
 
 trainerProfileRouter.put(
-	'/',
-	celebrate({
-		[Segments.BODY]: {
-			name: Joi.string(),
-			email: Joi.string(),
-			username: Joi.string(),
-			password: Joi.string(),
+  '/',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string(),
+      email: Joi.string(),
+      username: Joi.string(),
+      password: Joi.string(),
       oldPassword: Joi.string(),
-			passwordConfirmation: Joi.string().valid(Joi.ref('password'))
-		}
-	}),
-	trainerProfileController.update
+      passwordConfirmation: Joi.string().valid(Joi.ref('password')),
+    },
+  }),
+  trainerProfileController.update,
 );
 
 export default trainerProfileRouter;

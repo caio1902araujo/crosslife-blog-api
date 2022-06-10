@@ -14,27 +14,30 @@ const upload = multer(uploadConfig);
 const studentProfileController = new StudentProfileController();
 const studentAvatarController = new StudentAvatarController();
 
-studentProfileRouter.use(ensureValidToken);
-studentProfileRouter.use(ensureValidStudent);
+studentProfileRouter.use(ensureValidToken, ensureValidStudent);
 
 studentProfileRouter.get('/', studentProfileController.show);
 
-studentProfileRouter.patch('/avatar', upload.single('avatar'), studentAvatarController.update);
+studentProfileRouter.patch(
+  '/avatar',
+  upload.single('avatar'),
+  studentAvatarController.update,
+);
 
 studentProfileRouter.put(
-	'/',
-	celebrate({
-		[Segments.BODY]: {
-			name: Joi.string(),
+  '/',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string(),
       email: Joi.string().email(),
       telephone: Joi.string(),
-			username: Joi.string(),
-			password: Joi.string(),
+      username: Joi.string(),
+      password: Joi.string(),
       oldPassword: Joi.string(),
-			passwordconfirmation: Joi.string().valid(Joi.ref('password')),
-		}
-	}),
-	studentProfileController.update
+      passwordconfirmation: Joi.string().valid(Joi.ref('password')),
+    },
+  }),
+  studentProfileController.update,
 );
 
 export default studentProfileRouter;

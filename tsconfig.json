@@ -37,7 +37,6 @@
   },
   "include": [
     "src/**/*",
-    "src/shared/infra/typeorm/index.ts",
   ],
   "exclude": [
     "node_modules"

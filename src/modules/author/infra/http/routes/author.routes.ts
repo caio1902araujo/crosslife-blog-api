@@ -8,8 +8,6 @@ import ensureValidAdmin from '@modules/admin/infra/http/middlewares/ensureValidA
 const authorRouter = Router();
 const authorController = new AuthorController();
 
-authorRouter.get('/:username', authorController.show);
-
 authorRouter.get(
   '/',
   ensureValidToken,

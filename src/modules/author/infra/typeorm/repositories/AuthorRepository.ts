@@ -46,7 +46,6 @@ class AuthorRepository implements IAuthorRepository {
   public async findByUsername(username: string): Promise<Author | undefined> {
     const findAuthor = await this.ormRepository.findOne({
       where: { username },
-      select: ['name', 'description'],
     });
 
     return findAuthor;

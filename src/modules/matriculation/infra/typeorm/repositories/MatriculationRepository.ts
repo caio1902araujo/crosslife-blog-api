@@ -33,7 +33,7 @@ class MatriculationRepository implements IMatriculationRepository {
         'student.name',
         'student.username',
       ])
-      .orderBy('createdAt', orderCreatedAt)
+      .orderBy('matriculation.createdAt', orderCreatedAt)
       .offset(offset)
       .limit(limit);
 

@@ -3,19 +3,21 @@ import { container } from 'tsyringe';
 
 import UpdateTrainerAvatarService from '@modules/trainer/services/UpdateTrainerAvatarService';
 
-class TrainerAvatarController{
-	public async update(request: Request, response: Response): Promise<Response>{
-		const filename = request.file?.filename || '';
-		const updateTrainerAvatarService = container.resolve(UpdateTrainerAvatarService);
+class TrainerAvatarController {
+  public async update(request: Request, response: Response): Promise<Response> {
+    const filename = request.file?.filename || '';
+    const updateTrainerAvatarService = container.resolve(
+      UpdateTrainerAvatarService,
+    );
 
-		updateTrainerAvatarService.execute({
-			trainerId: request.trainer.id,
+    updateTrainerAvatarService.execute({
+      trainerId: request.trainer.id,
       categoryImage: 'trainers',
-			avatarFilename: filename,
-		});
+      avatarFilename: filename,
+    });
 
-		return response.json({ok: 'json'});
-	}
+    return response.status(204).json();
+  }
 }
 
 export default TrainerAvatarController;

@@ -16,7 +16,7 @@ class WorkoutCoverController {
       trainerId: request.trainer.id,
     });
 
-    return response.json({ ok: 'json' });
+    return response.status(204).json();
   }
 }
 

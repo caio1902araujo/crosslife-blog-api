@@ -16,7 +16,7 @@ class StudentAvatarController {
       avatarFilename: filename,
     });
 
-    return response.json({ ok: 'json' });
+    return response.status(204).json();
   }
 }
 

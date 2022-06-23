@@ -54,6 +54,7 @@ class News {
   }
 
   @Column()
+  @Exclude()
   authorId: string;
 
   @ManyToOne(() => Author)

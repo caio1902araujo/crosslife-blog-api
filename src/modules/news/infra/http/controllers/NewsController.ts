@@ -21,8 +21,9 @@ class NewsController {
 
   public async delete(request: Request, response: Response): Promise<Response> {
     const id = request.params.id;
+    const authorId = request.author.id;
     const deleteNewsService = container.resolve(DeleteNewsService);
-    await deleteNewsService.execute(id);
+    await deleteNewsService.execute(id, authorId);
 
     return response.status(204).json();
   }

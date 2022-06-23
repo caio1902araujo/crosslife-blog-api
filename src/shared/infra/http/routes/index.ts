@@ -7,6 +7,7 @@ import sessionsAdminRouter from '@modules/admin/infra/http/routes/sessions.route
 import authorRouter from '@modules/author/infra/http/routes/author.routes';
 import sessionsAuthorRouter from '@modules/author/infra/http/routes/sessionsAuthor.routes';
 import authorProfileRouter from '@modules/author/infra/http/routes/authorProfile.routes';
+import authorPresentationRouter from '@modules/author/infra/http/routes/authorPresentation.routes';
 
 import trainerRouter from '@modules/trainer/infra/http/routes/trainer.routes';
 import sessionsTrainerRouter from '@modules/trainer/infra/http/routes/sessionsTrainer.routes';
@@ -38,6 +39,7 @@ routes.use('/sessions/admin', sessionsAdminRouter);
 routes.use('/author', authorRouter);
 routes.use('/sessions/author', sessionsAuthorRouter);
 routes.use('/profile/author', authorProfileRouter);
+routes.use('/presentation/author', authorPresentationRouter);
 
 routes.use('/trainer', trainerRouter);
 routes.use('/sessions/trainer', sessionsTrainerRouter);

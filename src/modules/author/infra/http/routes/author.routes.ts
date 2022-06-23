@@ -8,10 +8,10 @@ import ensureValidAdmin from '@modules/admin/infra/http/middlewares/ensureValidA
 const authorRouter = Router();
 const authorController = new AuthorController();
 
+authorRouter.use(ensureValidToken, ensureValidAdmin);
+
 authorRouter.get(
   '/',
-  ensureValidToken,
-  ensureValidAdmin,
   celebrate({
     [Segments.QUERY]: {
       name: Joi.string().default(''),
@@ -37,8 +37,6 @@ authorRouter.delete(
 
 authorRouter.post(
   '/',
-  ensureValidToken,
-  ensureValidAdmin,
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),

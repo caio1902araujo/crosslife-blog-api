@@ -21,8 +21,9 @@ class WorkoutController {
 
   public async delete(request: Request, response: Response): Promise<Response> {
     const id = request.params.id;
+    const trainerId = request.trainer.id;
     const deleteWorkoutService = container.resolve(DeleteWorkoutService);
-    await deleteWorkoutService.execute(id);
+    await deleteWorkoutService.execute(id, trainerId);
 
     return response.status(204).json();
   }

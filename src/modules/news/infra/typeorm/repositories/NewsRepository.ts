@@ -30,7 +30,7 @@ class NewsRepository implements INewsRepository {
       .where('news.title ILIKE :title', { title: `%${title}%` })
       .andWhere('author.username = :username', { username })
       .select(['news.id', 'news.title', 'news.category', 'author.name'])
-      .orderBy('createdAt', 'DESC')
+      .orderBy('news.createdAt', 'DESC')
       .offset(offset)
       .limit(limit)
       .getMany();
@@ -48,7 +48,7 @@ class NewsRepository implements INewsRepository {
       .leftJoinAndSelect('news.author', 'author')
       .select(['news.id', 'news.title', 'news.category', 'author.name'])
       .where('title ILIKE :title', { title: `%${title}%` })
-      .orderBy('createdAt', 'DESC')
+      .orderBy('news.createdAt', 'DESC')
       .offset(offset)
       .limit(limit)
       .getMany();
@@ -66,6 +66,8 @@ class NewsRepository implements INewsRepository {
         'news.subtitle',
         'news.body',
         'news.category',
+        'news.cover',
+        'news.authorId',
         'author.name',
         'author.username',
         'author.description',

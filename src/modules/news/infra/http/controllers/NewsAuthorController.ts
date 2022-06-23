@@ -6,8 +6,8 @@ import IFindAllNewsByAuhorDTO from '@modules/news/dtos/IFindAllNewsByAuhorDTO';
 
 class NewsAuthorController {
   public async index(request: Request, response: Response): Promise<Response> {
-    const { title, username, offset, limit } =
-      request.query as IFindAllNewsByAuhorDTO;
+    const { username } = request.params;
+    const { title, offset, limit } = request.query as IFindAllNewsByAuhorDTO;
     const listNewsAuthorService = container.resolve(ListNewsAuthorService);
 
     const news = await listNewsAuthorService.execute({

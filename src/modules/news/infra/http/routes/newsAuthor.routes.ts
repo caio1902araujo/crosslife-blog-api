@@ -7,11 +7,13 @@ const newsAuthorRouter = Router();
 const newsAuthorController = new NewsAuthorController();
 
 newsAuthorRouter.get(
-  '/',
+  '/:username',
   celebrate({
+    [Segments.PARAMS]: {
+      username: Joi.string().required(),
+    },
     [Segments.QUERY]: {
       title: Joi.string().default(''),
-      username: Joi.string(),
       limit: Joi.number().default(10),
       offset: Joi.number().default(0),
     },

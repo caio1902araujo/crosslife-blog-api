@@ -37,7 +37,6 @@ class News {
   updatedAt: Date;
 
   @Column()
-  @Exclude()
   cover: string;
 
   @Expose({ name: 'coverUrl' })

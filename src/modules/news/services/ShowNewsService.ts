@@ -13,8 +13,8 @@ class ShowNewsService {
     private newsRepository: INewsRepository,
   ) {}
 
-  public async execute(id: string): Promise<News> {
-    const news = await this.newsRepository.findById(id);
+  public async execute(title: string): Promise<News> {
+    const news = await this.newsRepository.findByTitle(title);
 
     if (!news) {
       throw new AppError('Notícia não encontrada.', 404);

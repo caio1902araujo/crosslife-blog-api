@@ -7,6 +7,7 @@ interface INewsRepository {
   findAllNews(data: IFindAllNewsDTO): Promise<News[]>;
   findAllNewsByAuhor(data: IFindAllNewsByAuhorDTO): Promise<News[]>;
   findById(id: string): Promise<News | undefined>;
+  findByTitle(id: string): Promise<News | undefined>;
   delete(id: string): Promise<void>;
   create(data: ICreateNewsDTO): Promise<News>;
   save(budget: News): Promise<News>;

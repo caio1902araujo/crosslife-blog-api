@@ -46,7 +46,7 @@ class NewsRepository implements INewsRepository {
     const news = await this.ormRepository
       .createQueryBuilder('news')
       .leftJoinAndSelect('news.author', 'author')
-      .select(['news.id', 'news.title', 'news.category', 'author.name'])
+      .select(['news.title', 'news.category', 'news.createdAt', 'author.name'])
       .where('title ILIKE :title', { title: `%${title}%` })
       .orderBy('news.createdAt', 'DESC')
       .offset(offset)
@@ -57,6 +57,14 @@ class NewsRepository implements INewsRepository {
   }
 
   public async findById(id: string): Promise<News | undefined> {
+    const findNews = await this.ormRepository.findOne({
+      where: { id },
+    });
+
+    return findNews;
+  }
+
+  public async findByTitle(title: string): Promise<News | undefined> {
     const findNews = await this.ormRepository
       .createQueryBuilder('news')
       .leftJoinAndSelect('news.author', 'author')
@@ -67,12 +75,13 @@ class NewsRepository implements INewsRepository {
         'news.body',
         'news.category',
         'news.cover',
-        'news.authorId',
+        'news.createdAt',
+        'news.updatedAt',
         'author.name',
         'author.username',
         'author.description',
       ])
-      .where('news.id = :id', { id })
+      .where('news.title = :title', { title })
       .getOne();
 
     return findNews;

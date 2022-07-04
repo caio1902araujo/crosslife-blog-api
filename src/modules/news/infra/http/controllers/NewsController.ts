@@ -11,10 +11,9 @@ import IFindAllNewsDTO from '@modules/news/dtos/IFindAllNewsDTO';
 
 class NewsController {
   public async show(request: Request, response: Response): Promise<Response> {
-    const id = request.params.id;
-
+    const title = request.params.title;
     const showNews = container.resolve(ShowNewsService);
-    const news = await showNews.execute(id);
+    const news = await showNews.execute(title);
 
     return response.json(instanceToInstance(news));
   }

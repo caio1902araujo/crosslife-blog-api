@@ -83,6 +83,7 @@ class NewsRepository implements INewsRepository {
       .createQueryBuilder('news')
       .leftJoinAndSelect('news.author', 'author')
       .select([
+        'news.id',
         'news.title',
         'news.subtitle',
         'news.body',

@@ -2,22 +2,24 @@ import { inject, injectable } from 'tsyringe';
 
 import News from '../infra/typeorm/entities/News';
 import INewsRepository from '../repositories/INewsRepository';
-import IFindAllNewsByUsernameAuhorDTO from '../dtos/IFindAllNewsByUsernameAuhorDTO';
+import IFindAllNewsByIdAuhorDTO from '../dtos/IFindAllNewsByIdAuhorDTO';
 
 @injectable()
-class ListNewsAuthorService {
+class ListNewsByIdAuthorService {
   constructor(
     @inject('NewsRepository')
     private newsRepository: INewsRepository,
   ) {}
 
   public async execute({
-    username,
+    authorId,
+    title,
     offset,
     limit,
-  }: IFindAllNewsByUsernameAuhorDTO): Promise<News[]> {
-    const news = await this.newsRepository.findAllNewsByUsernameAuthor({
-      username,
+  }: IFindAllNewsByIdAuhorDTO): Promise<News[]> {
+    const news = await this.newsRepository.findAllNewsByIdAuthor({
+      authorId,
+      title,
       offset,
       limit,
     });
@@ -26,4 +28,4 @@ class ListNewsAuthorService {
   }
 }
 
-export default ListNewsAuthorService;
+export default ListNewsByIdAuthorService;

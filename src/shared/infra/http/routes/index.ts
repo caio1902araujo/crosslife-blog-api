@@ -30,8 +30,8 @@ import workoutRouter from '@modules/workout/infra/http/routes/workout.routes';
 import workoutsOfTheWeekRouter from '@modules/workout/infra/http/routes/workoutsOfTheWeek.routes';
 
 import newsRouter from '@modules/news/infra/http/routes/news.routes';
-import newsAuthorRouter from '@modules/news/infra/http/routes/newsAuthor.routes';
 import newsMostAccessedRouter from '@modules/news/infra/http/routes/newsMostAccessed.routes';
+import newsProfileAuthorRouter from '@modules/news/infra/http/routes/newsProfileAuthor.routes';
 
 const routes = Router();
 
@@ -63,8 +63,8 @@ routes.use('/budget', budgetRouter);
 routes.use('/workout', workoutRouter);
 routes.use('/workouts/week', workoutsOfTheWeekRouter);
 
-routes.use('/news/author', newsAuthorRouter);
 routes.use('/news/access-counter', newsMostAccessedRouter);
+routes.use('/news/profile/author', newsProfileAuthorRouter);
 routes.use('/news', newsRouter);
 
 export default routes;

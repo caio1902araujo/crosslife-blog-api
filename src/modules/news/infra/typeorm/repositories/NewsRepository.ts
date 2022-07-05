@@ -5,7 +5,8 @@ import News from '../entities/News';
 import INewsRepository from '@modules/news/repositories/INewsRepository';
 import ICreateNewsDTO from '@modules/news/dtos/ICreateNewsDTO';
 import IFindAllNewsDTO from '@modules/news/dtos/IFindAllNewsDTO';
-import IFindAllNewsByAuhorDTO from '@modules/news/dtos/IFindAllNewsByAuhorDTO';
+import IFindAllNewsByUsernameAuhorDTO from '@modules/news/dtos/IFindAllNewsByUsernameAuhorDTO';
+import IFindAllNewsByIdAuhorDTO from '@modules/news/dtos/IFindAllNewsByIdAuhorDTO';
 
 class NewsRepository implements INewsRepository {
   private ormRepository: Repository<News>;
@@ -18,18 +19,16 @@ class NewsRepository implements INewsRepository {
     await this.ormRepository.delete(id);
   }
 
-  public async findAllNewsByAuhor({
+  public async findAllNewsByUsernameAuthor({
     username,
-    title,
     offset,
     limit,
-  }: IFindAllNewsByAuhorDTO) {
+  }: IFindAllNewsByUsernameAuhorDTO) {
     const news = await this.ormRepository
       .createQueryBuilder('news')
       .leftJoinAndSelect('news.author', 'author')
-      .where('news.title ILIKE :title', { title: `%${title}%` })
-      .andWhere('author.username = :username', { username })
-      .select(['news.id', 'news.title', 'news.category', 'author.name'])
+      .where('author.username = :username', { username })
+      .select(['news.title', 'news.category', 'author.name'])
       .orderBy('news.createdAt', 'DESC')
       .offset(offset)
       .limit(limit)
@@ -64,12 +63,26 @@ class NewsRepository implements INewsRepository {
     return findNews;
   }
 
+  public async findAllNewsByIdAuthor({
+    authorId,
+    title,
+    offset,
+    limit,
+  }: IFindAllNewsByIdAuhorDTO): Promise<News[]> {
+    const findNews = await this.ormRepository.find({
+      where: { authorId, title: ILike(`%${title}%`) },
+      skip: offset,
+      take: limit,
+    });
+
+    return findNews;
+  }
+
   public async findByTitle(title: string): Promise<News | undefined> {
     const findNews = await this.ormRepository
       .createQueryBuilder('news')
       .leftJoinAndSelect('news.author', 'author')
       .select([
-        'news.id',
         'news.title',
         'news.subtitle',
         'news.body',

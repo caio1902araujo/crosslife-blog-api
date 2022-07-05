@@ -2,61 +2,15 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { instanceToInstance } from 'class-transformer';
 
-import ShowNewsService from '@modules/news/services/ShowNewsService';
-import CreateNewsService from '@modules/news/services/CreateNewsService';
-import DeleteNewsService from '@modules/news/services/DeleteNewsService';
+import ShowNewsByTitleService from '@modules/news/services/ShowNewsByTitleService';
 import ListNewsService from '@modules/news/services/ListNewsService';
-import UpdateNewsService from '@modules/news/services/UpdateNewsService';
 import IFindAllNewsDTO from '@modules/news/dtos/IFindAllNewsDTO';
 
 class NewsController {
   public async show(request: Request, response: Response): Promise<Response> {
     const title = request.params.title;
-    const showNews = container.resolve(ShowNewsService);
-    const news = await showNews.execute(title);
-
-    return response.json(instanceToInstance(news));
-  }
-
-  public async delete(request: Request, response: Response): Promise<Response> {
-    const id = request.params.id;
-    const authorId = request.author.id;
-    const deleteNewsService = container.resolve(DeleteNewsService);
-    await deleteNewsService.execute(id, authorId);
-
-    return response.status(204).json();
-  }
-
-  public async create(request: Request, response: Response): Promise<Response> {
-    const authorId = request.author.id;
-    const { title, subtitle, body, category } = request.body;
-
-    const createNewsService = container.resolve(CreateNewsService);
-    const news = await createNewsService.execute({
-      title,
-      subtitle,
-      body,
-      category,
-      authorId,
-    });
-
-    return response.json(instanceToInstance(news));
-  }
-
-  public async update(request: Request, response: Response): Promise<Response> {
-    const newsId = request.params.id;
-    const authorId = request.author.id;
-    const { title, subtitle, body, category } = request.body;
-
-    const updateNewsService = container.resolve(UpdateNewsService);
-    const news = await updateNewsService.execute({
-      newsId,
-      title,
-      subtitle,
-      body,
-      category,
-      authorId,
-    });
+    const showNewsByTitleService = container.resolve(ShowNewsByTitleService);
+    const news = await showNewsByTitleService.execute(title);
 
     return response.json(instanceToInstance(news));
   }

@@ -14,11 +14,13 @@ class ListNewsService {
 
   public async execute({
     title,
+    category,
     limit,
     offset,
   }: IFindAllNewsDTO): Promise<News[]> {
     const news = await this.newsRepository.findAllNews({
       title,
+      category,
       limit,
       offset,
     });

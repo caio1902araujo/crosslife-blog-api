@@ -39,18 +39,26 @@ class NewsRepository implements INewsRepository {
 
   public async findAllNews({
     title,
+    category,
     offset,
     limit,
   }: IFindAllNewsDTO): Promise<News[]> {
-    const news = await this.ormRepository
+    let queryNews = this.ormRepository
       .createQueryBuilder('news')
       .leftJoinAndSelect('news.author', 'author')
       .select(['news.title', 'news.category', 'news.createdAt', 'author.name'])
       .where('title ILIKE :title', { title: `%${title}%` })
       .orderBy('news.createdAt', 'DESC')
       .offset(offset)
-      .limit(limit)
-      .getMany();
+      .limit(limit);
+
+    if (category !== undefined) {
+      queryNews = queryNews.andWhere('category = :category', {
+        category: `${category}`,
+      });
+    }
+
+    const news = queryNews.getMany();
 
     return news;
   }

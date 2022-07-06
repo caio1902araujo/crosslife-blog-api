@@ -14,6 +14,7 @@ newsRouter.get(
   celebrate({
     [Segments.QUERY]: {
       title: Joi.string().default(''),
+      category: Joi.string(),
       limit: Joi.number().default(10),
       offset: Joi.number().default(0),
     },

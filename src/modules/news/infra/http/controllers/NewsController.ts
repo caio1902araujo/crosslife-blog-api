@@ -16,11 +16,12 @@ class NewsController {
   }
 
   public async index(request: Request, response: Response): Promise<Response> {
-    const { title, offset, limit } = request.query as IFindAllNewsDTO;
+    const { title, category, offset, limit } = request.query as IFindAllNewsDTO;
 
     const listNewsService = container.resolve(ListNewsService);
     const news = await listNewsService.execute({
       title,
+      category,
       limit,
       offset,
     });

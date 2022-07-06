@@ -14,7 +14,7 @@ interface INewsRepository {
   findByTitle(id: string): Promise<News | undefined>;
   delete(id: string): Promise<void>;
   create(data: ICreateNewsDTO): Promise<News>;
-  save(budget: News): Promise<News>;
+  save(news: News): Promise<News>;
 }
 
 export default INewsRepository;

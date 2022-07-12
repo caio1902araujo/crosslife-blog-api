@@ -19,7 +19,7 @@ class MatriculationRepository implements IMatriculationRepository {
     username,
     offset,
     limit,
-  }: IFindAllMatriculationsDTO): Promise<Matriculation[]> {
+  }: IFindAllMatriculationsDTO): Promise<[Matriculation[], number]> {
     let queryMatriculation = this.ormRepository
       .createQueryBuilder('matriculation')
       .leftJoinAndSelect('matriculation.student', 'student')
@@ -48,7 +48,7 @@ class MatriculationRepository implements IMatriculationRepository {
       });
     }
 
-    const matriculations = await queryMatriculation.getMany();
+    const matriculations = await queryMatriculation.getManyAndCount();
 
     return matriculations;
   }

@@ -22,8 +22,8 @@ class AuthorRepository implements IAuthorRepository {
     username,
     offset,
     limit,
-  }: IFindAllAuthorDTO): Promise<Author[]> {
-    const authors = await this.ormRepository.find({
+  }: IFindAllAuthorDTO): Promise<[Author[], number]> {
+    const authors = await this.ormRepository.findAndCount({
       where: {
         name: ILike('%' + name + '%'),
         username: ILike('%' + username + '%'),

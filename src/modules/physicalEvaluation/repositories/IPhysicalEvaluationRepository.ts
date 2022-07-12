@@ -4,7 +4,7 @@ import IFindAllPhysicalEvaluationDTO from '../dtos/IFindAllPhysicalEvaluationDTO
 interface IPhysicalEvaluationRepository {
   findAllPhysicalEvaluations(
     data: IFindAllPhysicalEvaluationDTO,
-  ): Promise<PhysicalEvaluation[]>;
+  ): Promise<[PhysicalEvaluation[], number]>;
   findPhysicalEvaluationFromStudent(
     studentId: string,
   ): Promise<PhysicalEvaluation | undefined>;

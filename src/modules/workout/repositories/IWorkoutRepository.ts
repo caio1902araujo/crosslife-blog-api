@@ -4,7 +4,7 @@ import IFindAllWorkoutsDTO from '../dtos/IFindAllWorkoutsDTO';
 import IFindAllWorkoutsOfTheWeekDTO from '../dtos/IFindAllWorkoutsOfTheWeekDTO';
 
 interface IWorkoutRepository {
-  findAllWorkouts(data: IFindAllWorkoutsDTO): Promise<Workout[]>;
+  findAllWorkouts(data: IFindAllWorkoutsDTO): Promise<[Workout[], number]>;
   findAllWorkoutsOfTheWeek(
     rangeDate: IFindAllWorkoutsOfTheWeekDTO,
   ): Promise<Workout[]>;

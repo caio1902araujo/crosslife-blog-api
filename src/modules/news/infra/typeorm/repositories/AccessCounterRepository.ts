@@ -17,12 +17,7 @@ class AccessCounterRepository implements IAccessCounterRepository {
       .createQueryBuilder('accessCounter')
       .leftJoinAndSelect('accessCounter.news', 'news')
       .leftJoinAndSelect('news.author', 'author')
-      .select([
-        'accessCounter.count',
-        'news.title',
-        'news.createdAt',
-        'author.name',
-      ])
+      .select(['news.title', 'news.createdAt', 'author.name'])
       .getMany();
 
     return accessCounter;

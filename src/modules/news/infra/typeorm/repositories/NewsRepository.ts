@@ -23,7 +23,7 @@ class NewsRepository implements INewsRepository {
     username,
     offset,
     limit,
-  }: IFindAllNewsByUsernameAuhorDTO) {
+  }: IFindAllNewsByUsernameAuhorDTO): Promise<[News[], number]> {
     const news = await this.ormRepository
       .createQueryBuilder('news')
       .leftJoinAndSelect('news.author', 'author')
@@ -32,7 +32,7 @@ class NewsRepository implements INewsRepository {
       .orderBy('news.createdAt', 'DESC')
       .offset(offset)
       .limit(limit)
-      .getMany();
+      .getManyAndCount();
 
     return news;
   }
@@ -42,7 +42,7 @@ class NewsRepository implements INewsRepository {
     category,
     offset,
     limit,
-  }: IFindAllNewsDTO): Promise<News[]> {
+  }: IFindAllNewsDTO): Promise<[News[], number]> {
     let queryNews = this.ormRepository
       .createQueryBuilder('news')
       .leftJoinAndSelect('news.author', 'author')
@@ -58,7 +58,7 @@ class NewsRepository implements INewsRepository {
       });
     }
 
-    const news = queryNews.getMany();
+    const news = queryNews.getManyAndCount();
 
     return news;
   }
@@ -76,8 +76,8 @@ class NewsRepository implements INewsRepository {
     title,
     offset,
     limit,
-  }: IFindAllNewsByIdAuhorDTO): Promise<News[]> {
-    const findNews = await this.ormRepository.find({
+  }: IFindAllNewsByIdAuhorDTO): Promise<[News[], number]> {
+    const findNews = await this.ormRepository.findAndCount({
       where: { authorId, title: ILike(`%${title}%`) },
       skip: offset,
       take: limit,

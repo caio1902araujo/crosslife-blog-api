@@ -17,7 +17,7 @@ class PhysicalEvaluationRepository implements IPhysicalEvaluationRepository {
     username,
     offset,
     limit,
-  }: IFindAllPhysicalEvaluationDTO): Promise<PhysicalEvaluation[]> {
+  }: IFindAllPhysicalEvaluationDTO): Promise<[PhysicalEvaluation[], number]> {
     const physicalEvaluation = await this.ormRepository
       .createQueryBuilder('physicalEvaluation')
       .leftJoinAndSelect('physicalEvaluation.student', 'student')
@@ -39,7 +39,7 @@ class PhysicalEvaluationRepository implements IPhysicalEvaluationRepository {
       ])
       .offset(offset)
       .limit(limit)
-      .getMany();
+      .getManyAndCount();
 
     return physicalEvaluation;
   }

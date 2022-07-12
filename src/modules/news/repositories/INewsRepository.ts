@@ -5,11 +5,13 @@ import IFindAllNewsByUsernameAuhorDTO from '../dtos/IFindAllNewsByUsernameAuhorD
 import IFindAllNewsByIdAuhorDTO from '../dtos/IFindAllNewsByIdAuhorDTO';
 
 interface INewsRepository {
-  findAllNews(data: IFindAllNewsDTO): Promise<News[]>;
-  findAllNewsByIdAuthor(data: IFindAllNewsByIdAuhorDTO): Promise<News[]>;
+  findAllNews(data: IFindAllNewsDTO): Promise<[News[], number]>;
+  findAllNewsByIdAuthor(
+    data: IFindAllNewsByIdAuhorDTO,
+  ): Promise<[News[], number]>;
   findAllNewsByUsernameAuthor(
     data: IFindAllNewsByUsernameAuhorDTO,
-  ): Promise<News[]>;
+  ): Promise<[News[], number]>;
   findById(id: string): Promise<News | undefined>;
   findByTitle(id: string): Promise<News | undefined>;
   delete(id: string): Promise<void>;

@@ -49,8 +49,8 @@ class WorkoutRepository implements IWorkoutRepository {
     dateOrder,
     offset,
     limit,
-  }: IFindAllWorkoutsDTO): Promise<Workout[]> {
-    const workouts = await this.ormRepository.find({
+  }: IFindAllWorkoutsDTO): Promise<[Workout[], number]> {
+    const workouts = await this.ormRepository.findAndCount({
       where: {
         title: ILike('%' + title + '%'),
         trainerId: trainerId,

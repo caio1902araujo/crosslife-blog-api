@@ -22,8 +22,8 @@ class BudgetRepository implements IBudgetRepository {
     paydayOrder,
     offset,
     limit,
-  }: IFindAllBudgetDTO): Promise<Budget[]> {
-    const budget = await this.ormRepository.find({
+  }: IFindAllBudgetDTO): Promise<[Budget[], number]> {
+    const budget = await this.ormRepository.findAndCount({
       where: {
         expense: ILike('%' + expense + '%'),
       },

@@ -6,19 +6,24 @@ import ITrainerRepository from '@modules/trainer/repositories/ITrainerRepository
 import ICreateTrainerDTO from '@modules/trainer/dtos/ICreateTrainerDTO';
 import IFindAllTrainerDTO from '@modules/trainer/dtos/IFindAllTrainerDTO';
 
-class TrainerRepository implements ITrainerRepository{
-	private ormRepository: Repository<Trainer>;
+class TrainerRepository implements ITrainerRepository {
+  private ormRepository: Repository<Trainer>;
 
-	constructor(){
-		this.ormRepository = getRepository(Trainer);
-	}
+  constructor() {
+    this.ormRepository = getRepository(Trainer);
+  }
 
   public async delete(id: string): Promise<void> {
     await this.ormRepository.delete(id);
   }
 
-  public async findAllTrainers({name, username, offset, limit}: IFindAllTrainerDTO): Promise<Trainer[]> {
-    const trainers = this.ormRepository.find({
+  public async findAllTrainers({
+    name,
+    username,
+    offset,
+    limit,
+  }: IFindAllTrainerDTO): Promise<[Trainer[], number]> {
+    const trainers = this.ormRepository.findAndCount({
       where: {
         name: ILike('%' + name + '%'),
         username: ILike('%' + username + '%'),
@@ -30,39 +35,39 @@ class TrainerRepository implements ITrainerRepository{
     return trainers;
   }
 
-	public async findById(id: string): Promise<Trainer | undefined> {
-		const findTrainer = await this.ormRepository.findOne({
-			where: {id: id},
-		});
+  public async findById(id: string): Promise<Trainer | undefined> {
+    const findTrainer = await this.ormRepository.findOne({
+      where: { id: id },
+    });
 
-		return findTrainer;
-	}
+    return findTrainer;
+  }
 
   public async findByUsername(username: string): Promise<Trainer | undefined> {
-		const findTrainer = await this.ormRepository.findOne({
-			where: { username },
-		});
+    const findTrainer = await this.ormRepository.findOne({
+      where: { username },
+    });
 
-		return findTrainer;
-	}
+    return findTrainer;
+  }
 
   public async findByEmail(email: string): Promise<Trainer | undefined> {
-		const findTrainer = await this.ormRepository.findOne({
-			where: { email },
-		});
+    const findTrainer = await this.ormRepository.findOne({
+      where: { email },
+    });
 
-		return findTrainer;
-	}
+    return findTrainer;
+  }
 
-  public async create(trainerData: ICreateTrainerDTO): Promise<Trainer>{
+  public async create(trainerData: ICreateTrainerDTO): Promise<Trainer> {
     const trainer = this.ormRepository.create(trainerData);
 
     await this.ormRepository.save(trainer);
 
-    return trainer
+    return trainer;
   }
 
-  public async save(trainer: Trainer): Promise<Trainer>{
+  public async save(trainer: Trainer): Promise<Trainer> {
     return await this.ormRepository.save(trainer);
   }
 }

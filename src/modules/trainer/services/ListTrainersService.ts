@@ -6,17 +6,27 @@ import Trainer from '../infra/typeorm/entities/Trainer';
 import IFindAllTrainerDTO from '../dtos/IFindAllTrainerDTO';
 
 @injectable()
-class ListTrainersService{
-	constructor(
-		@inject('TrainerRepository')
-		private trainerRepository: ITrainerRepository,
-	){}
+class ListTrainersService {
+  constructor(
+    @inject('TrainerRepository')
+    private trainerRepository: ITrainerRepository,
+  ) {}
 
-	public async execute({ name, username, limit, offset }: IFindAllTrainerDTO): Promise<Trainer[]> {
-		const trainers = await this.trainerRepository.findAllTrainers({ name, username, limit, offset });
+  public async execute({
+    name,
+    username,
+    limit,
+    offset,
+  }: IFindAllTrainerDTO): Promise<[Trainer[], number]> {
+    const trainers = await this.trainerRepository.findAllTrainers({
+      name,
+      username,
+      limit,
+      offset,
+    });
 
-		return trainers;
-	}
+    return trainers;
+  }
 }
 
 export default ListTrainersService;

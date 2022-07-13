@@ -17,7 +17,7 @@ class ListNewsService {
     category,
     limit,
     offset,
-  }: IFindAllNewsDTO): Promise<News[]> {
+  }: IFindAllNewsDTO): Promise<[News[], number]> {
     const news = await this.newsRepository.findAllNews({
       title,
       category,

@@ -17,7 +17,7 @@ class ListBudgetsService {
     paydayOrder,
     limit,
     offset,
-  }: IFindAllBudgetDTO): Promise<Budget[]> {
+  }: IFindAllBudgetDTO): Promise<[Budget[], number]> {
     const budgets = await this.budgetRepository.findAllBudgets({
       expense,
       paydayOrder,

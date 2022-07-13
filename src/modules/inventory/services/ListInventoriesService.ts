@@ -17,7 +17,7 @@ class ListInventoriesService {
     quantityOrder,
     limit,
     offset,
-  }: IFindAllInventoryDTO): Promise<Inventory[]> {
+  }: IFindAllInventoryDTO): Promise<[Inventory[], number]> {
     const inventories = await this.inventoryRepository.findAllInventories({
       product,
       quantityOrder,

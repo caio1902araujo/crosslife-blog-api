@@ -18,7 +18,7 @@ class ListWorkoutsService {
     dateOrder,
     limit,
     offset,
-  }: IFindAllWorkoutDTO): Promise<Workout[]> {
+  }: IFindAllWorkoutDTO): Promise<[Workout[], number]> {
     const workouts = await this.workoutRepository.findAllWorkouts({
       trainerId,
       title,

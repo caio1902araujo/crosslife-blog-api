@@ -16,7 +16,7 @@ class ListNewsByIdAuthorService {
     title,
     offset,
     limit,
-  }: IFindAllNewsByIdAuhorDTO): Promise<News[]> {
+  }: IFindAllNewsByIdAuhorDTO): Promise<[News[], number]> {
     const news = await this.newsRepository.findAllNewsByIdAuthor({
       authorId,
       title,

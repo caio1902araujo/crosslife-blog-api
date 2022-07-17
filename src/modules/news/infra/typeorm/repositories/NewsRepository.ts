@@ -100,6 +100,7 @@ class NewsRepository implements INewsRepository {
         'news.createdAt',
         'news.updatedAt',
         'author.name',
+        'author.avatar',
         'author.username',
         'author.description',
       ])

@@ -1,16 +1,12 @@
 import News from '../infra/typeorm/entities/News';
 import ICreateNewsDTO from '../dtos/ICreateNewsDTO';
 import IFindAllNewsDTO from '../dtos/IFindAllNewsDTO';
-import IFindAllNewsByUsernameAuhorDTO from '../dtos/IFindAllNewsByUsernameAuhorDTO';
 import IFindAllNewsByIdAuhorDTO from '../dtos/IFindAllNewsByIdAuhorDTO';
 
 interface INewsRepository {
   findAllNews(data: IFindAllNewsDTO): Promise<[News[], number]>;
   findAllNewsByIdAuthor(
     data: IFindAllNewsByIdAuhorDTO,
-  ): Promise<[News[], number]>;
-  findAllNewsByUsernameAuthor(
-    data: IFindAllNewsByUsernameAuhorDTO,
   ): Promise<[News[], number]>;
   findById(id: string): Promise<News | undefined>;
   findByTitle(id: string): Promise<News | undefined>;

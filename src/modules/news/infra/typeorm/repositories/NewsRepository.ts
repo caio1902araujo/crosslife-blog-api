@@ -5,7 +5,6 @@ import News from '../entities/News';
 import INewsRepository from '@modules/news/repositories/INewsRepository';
 import ICreateNewsDTO from '@modules/news/dtos/ICreateNewsDTO';
 import IFindAllNewsDTO from '@modules/news/dtos/IFindAllNewsDTO';
-import IFindAllNewsByUsernameAuhorDTO from '@modules/news/dtos/IFindAllNewsByUsernameAuhorDTO';
 import IFindAllNewsByIdAuhorDTO from '@modules/news/dtos/IFindAllNewsByIdAuhorDTO';
 
 class NewsRepository implements INewsRepository {
@@ -19,27 +18,10 @@ class NewsRepository implements INewsRepository {
     await this.ormRepository.delete(id);
   }
 
-  public async findAllNewsByUsernameAuthor({
-    username,
-    offset,
-    limit,
-  }: IFindAllNewsByUsernameAuhorDTO): Promise<[News[], number]> {
-    const news = await this.ormRepository
-      .createQueryBuilder('news')
-      .leftJoinAndSelect('news.author', 'author')
-      .where('author.username = :username', { username })
-      .select(['news.title', 'news.category', 'author.name'])
-      .orderBy('news.createdAt', 'DESC')
-      .offset(offset)
-      .limit(limit)
-      .getManyAndCount();
-
-    return news;
-  }
-
   public async findAllNews({
     title,
     category,
+    usernameAuthor,
     offset,
     limit,
   }: IFindAllNewsDTO): Promise<[News[], number]> {
@@ -55,6 +37,11 @@ class NewsRepository implements INewsRepository {
     if (category !== undefined) {
       queryNews = queryNews.andWhere('category = :category', {
         category: `${category}`,
+      });
+    }
+    if (usernameAuthor !== undefined) {
+      queryNews = queryNews.andWhere('author.username = :username', {
+        username: `${usernameAuthor}`,
       });
     }
 

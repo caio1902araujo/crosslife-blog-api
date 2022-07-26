@@ -22,6 +22,7 @@ class AccessCounterRepository implements IAccessCounterRepository {
         'news.title',
         'news.createdAt',
         'author.name',
+        'author.username',
       ])
       .orderBy('accessCounter.count', 'DESC')
       .limit(6)

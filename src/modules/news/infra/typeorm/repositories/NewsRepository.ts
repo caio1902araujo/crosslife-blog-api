@@ -28,7 +28,13 @@ class NewsRepository implements INewsRepository {
     let queryNews = this.ormRepository
       .createQueryBuilder('news')
       .leftJoinAndSelect('news.author', 'author')
-      .select(['news.title', 'news.category', 'news.createdAt', 'author.name'])
+      .select([
+        'news.title',
+        'news.category',
+        'news.createdAt',
+        'author.name',
+        'author.username',
+      ])
       .where('title ILIKE :title', { title: `%${title}%` })
       .orderBy('news.createdAt', 'DESC')
       .offset(offset)

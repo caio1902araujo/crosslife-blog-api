@@ -9,6 +9,8 @@ import AppError from '@shared/errors/AppError';
 interface IResponse {
   name: string;
   description: string;
+  avatar?: string;
+  avatarUrl: string | null;
 }
 
 @injectable()
@@ -25,9 +27,13 @@ class ShowAuthorPresentationService {
       throw new AppError('Autor(a) não encontrado(a).', 404);
     }
 
+    const { name, description, avatar } = author;
+
     return {
-      name: author.name,
-      description: author.description,
+      name,
+      description,
+      avatar,
+      avatarUrl: author.getAvatarUrl(),
     };
   }
 }

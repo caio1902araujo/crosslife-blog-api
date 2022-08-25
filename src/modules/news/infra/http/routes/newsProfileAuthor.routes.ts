@@ -20,6 +20,8 @@ newsProfileAuthorRouter.get(
   '/',
   celebrate({
     [Segments.QUERY]: {
+      category: Joi.string(),
+      order: Joi.string().default('DESC'),
       title: Joi.string().default(''),
       limit: Joi.number().default(10),
       offset: Joi.number().default(0),

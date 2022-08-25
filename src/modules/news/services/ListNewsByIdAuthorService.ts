@@ -13,12 +13,16 @@ class ListNewsByIdAuthorService {
 
   public async execute({
     authorId,
+    category,
+    order,
     title,
     offset,
     limit,
   }: IFindAllNewsByIdAuhorDTO): Promise<[News[], number]> {
     const news = await this.newsRepository.findAllNewsByIdAuthor({
       authorId,
+      category,
+      order,
       title,
       offset,
       limit,

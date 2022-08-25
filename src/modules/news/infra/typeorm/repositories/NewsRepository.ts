@@ -66,17 +66,33 @@ class NewsRepository implements INewsRepository {
 
   public async findAllNewsByIdAuthor({
     authorId,
+    category,
+    order,
     title,
     offset,
     limit,
   }: IFindAllNewsByIdAuhorDTO): Promise<[News[], number]> {
-    const findNews = await this.ormRepository.findAndCount({
-      where: { authorId, title: ILike(`%${title}%`) },
-      skip: offset,
-      take: limit,
-    });
+    let queryNews = this.ormRepository
+      .createQueryBuilder('news')
+      .leftJoinAndSelect('news.author', 'author')
+      .select(['news.id', 'news.title', 'news.category', 'news.createdAt'])
+      .where('title ILIKE :title', { title: `%${title}%` })
+      .andWhere('author.id = :authorId', {
+        authorId: `${authorId}`,
+      })
+      .orderBy('news.createdAt', order)
+      .offset(offset)
+      .limit(limit);
 
-    return findNews;
+    if (category !== undefined) {
+      queryNews = queryNews.andWhere('category = :category', {
+        category: `${category}`,
+      });
+    }
+
+    const news = queryNews.getManyAndCount();
+
+    return news;
   }
 
   public async findByTitle(title: string): Promise<News | undefined> {

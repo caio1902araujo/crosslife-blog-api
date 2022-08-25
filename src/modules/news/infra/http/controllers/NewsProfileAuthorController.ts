@@ -13,13 +13,16 @@ import IFindAllNewsByIdAuhorDTO from '@modules/news/dtos/IFindAllNewsByIdAuhorDT
 class NewsProfileAuthorController {
   public async index(request: Request, response: Response): Promise<Response> {
     const authorId = request.author.id;
-    const { title, offset, limit } = request.query as IFindAllNewsByIdAuhorDTO;
+    const { title, category, order, offset, limit } =
+      request.query as IFindAllNewsByIdAuhorDTO;
     const listNewsByIdAuthorService = container.resolve(
       ListNewsByIdAuthorService,
     );
 
     const news = await listNewsByIdAuthorService.execute({
       authorId,
+      category,
+      order,
       title,
       offset,
       limit,

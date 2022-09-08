@@ -33,6 +33,8 @@ import newsRouter from '@modules/news/infra/http/routes/news.routes';
 import newsMostAccessedRouter from '@modules/news/infra/http/routes/newsMostAccessed.routes';
 import newsProfileAuthorRouter from '@modules/news/infra/http/routes/newsProfileAuthor.routes';
 
+import questionRouter from '@modules/student/infra/http/routes/question.routes';
+
 const routes = Router();
 
 routes.use('/sessions/admin', sessionsAdminRouter);
@@ -66,5 +68,7 @@ routes.use('/workouts/week', workoutsOfTheWeekRouter);
 routes.use('/news/access-counter', newsMostAccessedRouter);
 routes.use('/news/profile/author', newsProfileAuthorRouter);
 routes.use('/news', newsRouter);
+
+routes.use('/question', questionRouter);
 
 export default routes;

@@ -30,6 +30,7 @@ Para que consiga inicializar a API sem problemas nenhum, é necessário ter as s
 * Ter [Git](https://git-scm.com/) para clonar o projeto.
 * Ter [Node.js](https://nodejs.org/en/) instalado.
 * Ter [Docker](https://www.docker.com/) rodando um container PostgreSQL.
+* Ter um bucket criado no [Firebase](https://firebase.google.com/?hl=pt-br) para o armazenamento de imagens na nuvem.
 
 ## Como executar o projeto
 Seguir o passo a passo para conseguir rodar a aplicação na sua máquina
